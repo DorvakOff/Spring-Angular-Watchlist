@@ -21,7 +21,7 @@
         <dependency>
             <groupId>com.dorvak</groupId>
             <artifactId>moteur-web</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
 </project>
