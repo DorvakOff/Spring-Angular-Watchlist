@@ -1,0 +1,8 @@
+/.idea/
+/WEB-INF/
+*.iml
+.angular/
+dist/
+node_modules/
+node/
+target/
