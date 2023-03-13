@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+body {
+  --darker: #343a40;
+  --dark: #37404a;
+
+  --text-light: #99a8b9;
+  --text-muted: #707275;
+  --text-blue: #445598;
+
+  --danger: #ff5b5b;
+  --success: #11b01f;
+  --info: #536de6;
+
+  font-family: 'Nunito', sans-serif;
+
+  background-color: var(--dark);
+}
