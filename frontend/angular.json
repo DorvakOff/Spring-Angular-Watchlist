@@ -15,7 +15,7 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "",
+      "prefix": "cmp",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",

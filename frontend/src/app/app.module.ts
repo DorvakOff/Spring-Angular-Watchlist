@@ -5,11 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SearchbarComponent } from './components/shared/searchbar/searchbar.component';
 import {FormsModule} from "@angular/forms";
+import { ButtonComponent } from './components/shared/button/button.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SearchbarComponent
+    SearchbarComponent,
+    ButtonComponent
   ],
   imports: [
     BrowserModule,

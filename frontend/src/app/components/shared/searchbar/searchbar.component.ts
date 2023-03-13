@@ -2,7 +2,7 @@ import {Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'searchbar',
+  selector: 'cmp-searchbar',
   templateUrl: './searchbar.component.html',
   styleUrls: ['./searchbar.component.scss']
 })
