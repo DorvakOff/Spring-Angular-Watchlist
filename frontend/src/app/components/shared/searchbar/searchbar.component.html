@@ -1,19 +1,21 @@
-<div class="search-input">
-  <input (keyup)="onKeySearch($event)" [(ngModel)]="keywords" id="search" name="search" placeholder="Search"
-         type="text"/>
-  <img (click)="doSearch()" alt="Search icon" src="assets/images/icons/search.svg" draggable="false"/>
-</div>
-<div [hidden]="hideResults" class="search-results">
-  <div *ngFor="let result of results" class="search-result">
-    <a (click)="redirect(result.url)" class="search-result-text">
-      {{result.title}}
-    </a>
+<div [style.width]="width" class="search">
+  <div class="search-input">
+    <input (keyup)="onKeySearch($event)" [(ngModel)]="keywords" id="search" name="search" placeholder="Search"
+           type="text"/>
+    <img (click)="doSearch()" alt="Search icon" draggable="false" src="assets/images/icons/search.svg"/>
   </div>
-</div>
-<div [hidden]="hideResults || results.length" class="search-results">
-  <div class="search-result">
-    <a class="search-result-text">
-      No results found
-    </a>
+  <div [hidden]="hideResults" class="search-results">
+    <div *ngFor="let result of results" class="search-result">
+      <a (click)="redirect(result.url)" class="search-result-text">
+        {{result.title}}
+      </a>
+    </div>
+  </div>
+  <div [hidden]="hideResults || results.length" class="search-results">
+    <div class="search-result">
+      <a class="search-result-text">
+        No results found
+      </a>
+    </div>
   </div>
 </div>

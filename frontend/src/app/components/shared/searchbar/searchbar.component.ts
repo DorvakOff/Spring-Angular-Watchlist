@@ -12,6 +12,7 @@ export class SearchbarComponent implements OnInit {
 
   @Output() onSearch: EventEmitter<string> = new EventEmitter<string>()
   @Input() inputResults: SearchResult[] = []
+  @Input() width: string = '100%'
 
   results: SearchResult[] = []
   hideResults: boolean = true
