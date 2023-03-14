@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="min-height: 70px">
+  <!-- Navbar brand -->
+  <a class="navbar-brand mt-2 mt-lg-0" routerLink="/">
+    <img alt="Application Logo" loading="lazy" src="../../../assets/images/favicon.ico"/>
+  </a>
+  <!-- Container wrapper -->
+  <div class="container-fluid">
+    <!-- Toggle button -->
+    <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+            class="navbar-toggler"
+            data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible wrapper -->
+    <div class="collapse navbar-collapse " id="navbarSupportedContent">
+      <ul class="navbar-nav left-items">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/search">{{'SEARCH' | translate}}</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/watchlist">{{'WATCHLIST' | translate}}</a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav right-items">
+        <!-- Lang selection -->
+        <li class="nav-item dropdown">
+          <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button">
+            <img [alt]="translation.getLanguageName(translation.getLang())"
+                 [src]="translation.getFlag(translation.getLang())"
+                 class="lang-flag"/>
+            {{translation.getLang() | uppercase}}
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark" style="min-width: 10px">
+            <li *ngFor="let lang of translation.languagesConfig"><a (click)="changeLang(lang.code)"
+                                                                    class="dropdown-item"
+                                                                    role="button">
+              <img [alt]="'Flag for ' + lang.code" [src]="translation.getFlag(lang.code)" class="lang-flag"/>
+              {{lang.code | uppercase}}
+            </a></li>
+          </ul>
+        </li>
+      </ul>
+      <!-- Right elements -->
+    </div>
+  </div>
+  <!-- Container wrapper -->
+</nav>
+<div class="fake-nav"></div>

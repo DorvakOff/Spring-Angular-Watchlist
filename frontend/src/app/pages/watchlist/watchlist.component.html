@@ -1,0 +1,12 @@
+<div class="search-results">
+    <div *ngFor="let movie of watchlist" class="search-result" (click)="onMovieClick(movie)">
+      <img [alt]="movie.Title" [src]="movie.Poster" draggable="false" (error)="onErrorImage($event)"/>
+      <div class="search-result-info">
+        <h3>{{movie.Title}}</h3>
+        <p>{{movie.Year}}</p>
+      </div>
+    </div>
+</div>
+<div *ngIf="watchlist.length === 0" class="no-results">
+  <p>No movies in your watchlist</p>
+</div>

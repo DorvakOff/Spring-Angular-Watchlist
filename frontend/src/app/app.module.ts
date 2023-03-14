@@ -6,19 +6,46 @@ import { AppComponent } from './app.component';
 import { SearchbarComponent } from './components/shared/searchbar/searchbar.component';
 import {FormsModule} from "@angular/forms";
 import { ButtonComponent } from './components/shared/button/button.component';
+import {HttpClient, HttpClientModule} from "@angular/common/http";
+import { MovieComponent } from './pages/movie/movie.component';
+import { SearchComponent } from './pages/search/search.component';
+import {MenuComponent} from "./components/menu/menu.component";
+import {AlertComponent} from "./components/alerts/alert/alert.component";
+import {AlertBoxComponent} from "./components/alerts/alert-box/alert-box.component";
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import { WatchlistComponent } from './pages/watchlist/watchlist.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchbarComponent,
-    ButtonComponent
+    ButtonComponent,
+    MovieComponent,
+    SearchComponent,
+    MenuComponent,
+    AlertComponent,
+    AlertBoxComponent,
+    WatchlistComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+export function HttpLoaderFactory(httpClient: HttpClient) {
+  return new TranslateHttpLoader(httpClient)
+}

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {SearchResult} from "./components/shared/searchbar/searchbar.component";
+import {Component} from '@angular/core';
+import {TranslationService} from "./services/translation.service";
 
 @Component({
   selector: 'app-root',
@@ -8,14 +8,7 @@ import {SearchResult} from "./components/shared/searchbar/searchbar.component";
 })
 export class AppComponent {
   title = 'frontend';
-  searchResults: SearchResult[] = []
 
-  constructor() {
-    for (let i = 0; i < 50; i++) {
-      this.searchResults.push({
-        title: `Test ${i}`,
-        url: '/test'
-      })
-    }
+  constructor(_translate: TranslationService) {
   }
 }

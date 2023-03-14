@@ -13,6 +13,8 @@ export class SearchbarComponent implements OnInit {
   @Output() onSearch: EventEmitter<string> = new EventEmitter<string>()
   @Input() inputResults: SearchResult[] = []
   @Input() width: string = '100%'
+  @Input() shouldShowResults: boolean = true
+  @Input() defaultKeywords: string = ''
 
   results: SearchResult[] = []
   hideResults: boolean = true
@@ -28,6 +30,7 @@ export class SearchbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.keywords = this.defaultKeywords.trim()
   }
 
   onKeySearch($event: KeyboardEvent) {
@@ -36,12 +39,8 @@ export class SearchbarComponent implements OnInit {
       this.doSearch()
       return
     }
-    if (this.keywords.length < 2) {
-      this.hideResults = true
-      return
-    }
     this.timeout = setTimeout(() => {
-      if (this.keywords.length >= 2) {
+      if (this.keywords.trim().length >= 2) {
         this.doSearch()
       }
     }, 250)
@@ -51,11 +50,13 @@ export class SearchbarComponent implements OnInit {
     if (!this.keywords || !this.inputResults) {
       return
     }
+    this.onSearch.emit(this.keywords.trim())
     this.results = this.inputResults.filter((result: SearchResult) => {
-      return result.title.toLowerCase().includes(this.keywords.toLowerCase())
+      return result.title.trim().toLowerCase().includes(this.keywords.trim().toLowerCase())
     })
-    this.hideResults = false
-    this.onSearch.emit(this.keywords)
+    if (this.shouldShowResults) {
+      this.hideResults = false
+    }
   }
 
   redirect(url: string) {
