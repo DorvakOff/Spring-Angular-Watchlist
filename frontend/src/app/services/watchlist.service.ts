@@ -27,7 +27,12 @@ export class WatchlistService {
 
   addToWatchlist(movie: JSONMovie) {
     let watchlist = this.getWatchlist();
-    watchlist.push(movie);
+    watchlist.push({
+      Title: movie.Title,
+      Year: movie.Year,
+      imdbID: movie.imdbID,
+      Poster: movie.Poster
+    });
     localStorage.setItem('watchlist', JSON.stringify(watchlist));
   }
 
@@ -46,7 +51,12 @@ export class WatchlistService {
     if (this.isOnWatchlist(movie.imdbID)) {
       this.removeFromWatchlist(movie.imdbID);
     } else {
-      this.addToWatchlist(movie);
+      this.addToWatchlist({
+        Title: movie.Title,
+        Year: movie.Year,
+        imdbID: movie.imdbID,
+        Poster: movie.Poster
+      });
     }
   }
 }
