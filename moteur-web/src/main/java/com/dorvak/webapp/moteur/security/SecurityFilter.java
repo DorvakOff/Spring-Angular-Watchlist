@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 
-@Order(Integer.MIN_VALUE + 1)
+@Order(Integer.MIN_VALUE)
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
 
