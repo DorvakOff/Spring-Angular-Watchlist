@@ -6,7 +6,6 @@ import java.util.Map;
 public class OutputData extends IOData {
 
     private final Map<String, Object> data;
-    private boolean error = false;
 
     public OutputData(String servletName, String action) {
         super(servletName, action);
@@ -25,10 +24,5 @@ public class OutputData extends IOData {
 
     public void setError(String message) {
         this.data.put("error", message);
-        this.error = true;
-    }
-
-    public boolean hasError() {
-        return error;
     }
 }

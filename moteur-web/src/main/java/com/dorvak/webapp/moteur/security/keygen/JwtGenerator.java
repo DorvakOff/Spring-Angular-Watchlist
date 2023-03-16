@@ -46,11 +46,10 @@ public class JwtGenerator {
     }
 
     public DecodedJWT verifyToken(String token) throws JWTVerificationException {
+        if (token == null) throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         try {
-            if (token != null && token.startsWith("Bearer ")) {
+            if (token.startsWith("Bearer ")) {
                 token = token.substring(7);
-            } else {
-                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
             }
             return verifier.verify(token);
         } catch (JWTVerificationException e) {

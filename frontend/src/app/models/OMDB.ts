@@ -38,8 +38,8 @@ export interface Rating {
 }
 
 export interface JSONMovie {
-  Title: string;
-  Year: string;
+  title: string;
+  year: string;
   imdbID: string;
-  Poster: string;
+  poster: string;
 }

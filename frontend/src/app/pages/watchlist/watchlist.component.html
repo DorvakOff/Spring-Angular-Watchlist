@@ -1,12 +1,12 @@
 <div class="search-results">
-    <div *ngFor="let movie of watchlist" class="search-result" (click)="onMovieClick(movie)">
-      <img [alt]="movie.Title" [src]="movie.Poster" draggable="false" (error)="onErrorImage($event)"/>
+    <div *ngFor="let movie of watchlistService.watchlist" class="search-result" (click)="onMovieClick(movie)">
+      <img [alt]="movie.title" [src]="movie.poster" draggable="false" (error)="onErrorImage($event)"/>
       <div class="search-result-info">
-        <h3>{{movie.Title}}</h3>
-        <p>{{movie.Year}}</p>
+        <h3>{{movie.title}}</h3>
+        <p>{{movie.year}}</p>
       </div>
     </div>
 </div>
-<div *ngIf="watchlist.length === 0" class="no-results">
+<div *ngIf="watchlistService.watchlist.length === 0" class="no-results">
   <p>No movies in your watchlist</p>
 </div>

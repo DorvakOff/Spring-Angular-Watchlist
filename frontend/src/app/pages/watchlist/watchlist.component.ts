@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {JSONMovie} from "../../models/OMDB";
 import {Router} from "@angular/router";
 import {WatchlistService} from "../../services/watchlist.service";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'cmp-watchlist',
@@ -10,10 +11,13 @@ import {WatchlistService} from "../../services/watchlist.service";
 })
 export class WatchlistComponent implements OnInit {
 
-  watchlist: JSONMovie[] = []
-
-  constructor(private router: Router, private watchlistService: WatchlistService) {
-    this.watchlist = watchlistService.getWatchlist()
+  constructor(private router: Router, public watchlistService: WatchlistService, private userService: UserService) {
+    if(!this.userService.user) {
+      this.router.navigateByUrl('/login?redirect=/watchlist')
+    }
+    if (!this.watchlistService.watchlist) {
+      this.watchlistService.loadWatchlist()
+    }
   }
 
   ngOnInit(): void {

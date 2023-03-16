@@ -20,7 +20,6 @@ export class MovieComponent implements OnInit {
           this.router.navigateByUrl(`/search?q=${params['id']}`)
         } else {
           this.movie = response
-          console.log(this.movie)
         }
       }, () => {
         this.router.navigateByUrl(`/search?q=${params['id']}`)

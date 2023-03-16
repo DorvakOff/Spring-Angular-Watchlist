@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 
-@Order(Integer.MIN_VALUE)
+@Order(1)
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
 
@@ -26,6 +26,12 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     @Override
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
+        if ("OPTIONS".equals(request.getMethod())) {
+            res.setStatus(HttpServletResponse.SC_OK);
+            chain.doFilter(request, res);
+            return;
+        }
+
         String authHeader = request.getHeader("Authorization");
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String authToken = authHeader.substring(7);

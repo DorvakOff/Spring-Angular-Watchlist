@@ -15,11 +15,16 @@ export class ServletRequesterService {
   constructor(private http: HttpClient, private alertHandler: AlertHandlerService) {
   }
 
-  requestAction(servlet: string, action: string): Observable<ServletResponse> {
+  requestAction(servlet: string, action: string, data: any = {}): Observable<ServletResponse> {
     return new Observable<ServletResponse>(subscriber => {
-      this.http.post<ServletResponse>(`${this.url}/api/servlet/execute`, {
-        servlet: servlet,
-        action: action
+      this.http.post<ServletResponse>(`${this.url}/servlet/execute`, {
+        servletName: servlet,
+        action: action,
+        data: data
+      }, {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('token') || ''
+        }
       }).subscribe(response => {
         this.handlePossibleError(response)
         subscriber.next(response)
@@ -28,7 +33,7 @@ export class ServletRequesterService {
   }
 
   private handlePossibleError(response: ServletResponse) {
-    if (response.error && response.data.error) {
+    if (response.data.error) {
       this.alertHandler.raiseError(response.data.error)
     }
   }

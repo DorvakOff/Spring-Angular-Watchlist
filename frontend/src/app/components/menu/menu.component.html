@@ -19,7 +19,7 @@
                     <a class="nav-link" routerLink="/search">{{'SEARCH' | translate}}</a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item" *ngIf="userService.user">
                     <a class="nav-link" routerLink="/watchlist">{{'WATCHLIST' | translate}}</a>
                 </li>
             </ul>

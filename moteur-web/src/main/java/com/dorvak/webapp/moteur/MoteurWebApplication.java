@@ -6,14 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 @Configuration
+@EnableJpaRepositories("com.dorvak.webapp")
+@ComponentScan("com.dorvak.webapp")
+@EntityScan("com.dorvak.webapp")
 public class MoteurWebApplication implements CommandLineRunner {
 
     public static final String VERSION = "1.0.0";
@@ -64,5 +70,9 @@ public class MoteurWebApplication implements CommandLineRunner {
 
     public CustomBearerAuthenticationManager getCustomBearerAuthenticationManager() {
         return customBearerAuthenticationManager;
+    }
+
+    public ConfigurableApplicationContext getApplicationContext() {
+        return ctx;
     }
 }

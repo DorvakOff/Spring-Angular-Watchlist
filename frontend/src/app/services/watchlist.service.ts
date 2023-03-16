@@ -1,61 +1,55 @@
 import {Injectable} from '@angular/core';
-import {JSONMovie} from "../models/OMDB";
+import {JSONMovie, OMDBMovie} from "../models/OMDB";
+import {ServletRequesterService} from "./servlet-requester.service";
+import {AlertHandlerService} from "./alert-handler.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class WatchlistService {
 
-  constructor() {
+  watchlist: JSONMovie[] = [];
+
+  constructor(private servletRequesterService: ServletRequesterService, private alertHandler: AlertHandlerService) {
   }
 
-  getWatchlist(): JSONMovie[] {
-    let watchlist = JSON.parse(localStorage.getItem('watchlist') || '[]')
-
-    // order by Title
-    watchlist.sort((a: JSONMovie, b: JSONMovie) => {
-      if (a.Title > b.Title) {
-        return 1;
-      } else if (a.Title < b.Title) {
-        return -1;
-      } else {
-        return 0;
-      }
-    });
-    return watchlist;
+  loadWatchlist() {
+    this.servletRequesterService.requestAction('WatchlistServlet', 'init').subscribe(response => {
+      this.watchlist = response.data.watchlist
+    }, error => this.alertHandler.raiseError(error));
   }
 
   addToWatchlist(movie: JSONMovie) {
-    let watchlist = this.getWatchlist();
-    watchlist.push({
-      Title: movie.Title,
-      Year: movie.Year,
-      imdbID: movie.imdbID,
-      Poster: movie.Poster
-    });
-    localStorage.setItem('watchlist', JSON.stringify(watchlist));
+    let data = {
+      movie: movie
+    }
+    this.servletRequesterService.requestAction('WatchlistServlet', 'add', data).subscribe(response => {
+      this.watchlist = response.data.watchlist
+    }, error => this.alertHandler.raiseError(error));
+    this.watchlist.push(movie);
   }
 
   removeFromWatchlist(imdbID: string) {
-    let watchlist = this.getWatchlist();
-    watchlist = watchlist.filter(watchlistMovie => watchlistMovie.imdbID !== imdbID);
-    localStorage.setItem('watchlist', JSON.stringify(watchlist));
+    this.servletRequesterService.requestAction('WatchlistServlet', 'delete', {imdbID: imdbID}).subscribe(response => {
+      this.watchlist = response.data.watchlist
+    }, error => this.alertHandler.raiseError(error));
+    this.watchlist = this.watchlist.filter(watchlistMovie => watchlistMovie.imdbID !== imdbID);
   }
 
   isOnWatchlist(imdbID: string): boolean {
-    let watchlist = this.getWatchlist();
-    return watchlist.some(watchlistMovie => watchlistMovie.imdbID === imdbID);
+    if (!this.watchlist) return false;
+    return this.watchlist.some(watchlistMovie => watchlistMovie.imdbID === imdbID);
   }
 
-  addOrRemoveFromWatchlist(movie: JSONMovie) {
+  addOrRemoveFromWatchlist(movie: OMDBMovie) {
     if (this.isOnWatchlist(movie.imdbID)) {
       this.removeFromWatchlist(movie.imdbID);
     } else {
       this.addToWatchlist({
-        Title: movie.Title,
-        Year: movie.Year,
+        title: movie.Title,
+        year: movie.Year,
         imdbID: movie.imdbID,
-        Poster: movie.Poster
+        poster: movie.Poster
       });
     }
   }

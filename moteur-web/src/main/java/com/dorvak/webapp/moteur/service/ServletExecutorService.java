@@ -53,7 +53,8 @@ public class ServletExecutorService {
         } catch (ServletExecutionException e) {
             outputData.setError(e.getMessage());
         } catch (Exception e) {
-            outputData.setError("Internal error");
+            e.printStackTrace();
+            outputData.setError(CharacterUtils.isEmptyTrim(e.getMessage()) ? e.getClass().getSimpleName() : e.getMessage());
         }
         return outputData;
     }
