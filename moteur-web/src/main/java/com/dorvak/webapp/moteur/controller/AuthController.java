@@ -50,11 +50,7 @@ public class AuthController {
         if (keyManager.getUserRepository().existsByUsernameOrEmail(dto.username(), dto.email())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "User or email already exists");
         }
-        User user = new User();
-        user.setUsername(dto.username());
-        user.setEmail(dto.email());
-        user.setPassword(PasswordManager.encryptPassword(dto.password()));
-        user.setLastLogin(Instant.now());
+        User user = new User(dto.username(), dto.email(), PasswordManager.encryptPassword(dto.password()));
         user.setLastLoginIp(IpUtils.getIp(request));
         keyManager.getUserRepository().save(user);
         return keyManager.getJwtGenerator().generateToken(user.getUserId());

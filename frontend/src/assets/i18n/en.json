@@ -17,5 +17,6 @@
   "PASSWORD": "Password",
   "REPEAT_PASSWORD": "Repeat Password",
   "USERNAME": "Username",
-  "LOGIN_OR_CREATE": "Login or create an account"
+  "LOGIN_OR_CREATE": "Login or create an account",
+  "EMAIL_OR_USERNAME": "Email or Username"
 }

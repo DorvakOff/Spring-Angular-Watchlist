@@ -34,6 +34,7 @@ public class User {
         this.email = email;
         this.password = password;
         this.creationDate = Instant.now();
+        this.lastLogin = Instant.now();
     }
 
     public String getUsername() {
