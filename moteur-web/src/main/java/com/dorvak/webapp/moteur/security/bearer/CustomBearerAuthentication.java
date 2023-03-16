@@ -1,23 +1,34 @@
 package com.dorvak.webapp.moteur.security.bearer;
 
-import org.springframework.security.authentication.AbstractAuthenticationToken;
+import com.dorvak.webapp.moteur.model.User;
 
-public class CustomBearerAuthentication extends AbstractAuthenticationToken {
+public class CustomBearerAuthentication {
     private final String authToken;
+    private boolean authenticated = false;
+    private User user;
 
     public CustomBearerAuthentication(String authToken) {
-        super(null);
         setAuthenticated(false);
         this.authToken = authToken;
     }
 
-    @Override
     public Object getCredentials() {
         return authToken;
     }
 
-    @Override
-    public Object getPrincipal() {
-        return null;
+    public boolean isAuthenticated() {
+        return authenticated;
+    }
+
+    public void setAuthenticated(boolean authenticated) {
+        this.authenticated = authenticated;
+    }
+
+    public User getDetails() {
+        return user;
+    }
+
+    public void setDetails(User user) {
+        this.user = user;
     }
 }

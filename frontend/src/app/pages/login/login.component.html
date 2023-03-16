@@ -1,0 +1,62 @@
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 bordered-primary" style="width: 100%">
+            <h1>{{'LOGIN_OR_CREATE' | translate}}</h1>
+            <hr/>
+            <div class="row">
+                <div (keydown.enter)="login()" class="col-md-6">
+                    <!-- login form -->
+                    <h2>{{'LOGIN' | translate}}</h2>
+                    <div class="py-2">
+                        <label for="email1">{{'EMAIL' | translate}}</label>
+                        <br/>
+                        <input [(ngModel)]="loginEmail" [disabled]="loading" id="email1" name="email" [placeholder]="'EMAIL' | translate"
+                               style="width: 250px" type="email"/>
+                    </div>
+                    <div class="py-2">
+                        <label for="password">{{'PASSWORD' | translate}}</label>
+                        <br/>
+                        <input [(ngModel)]="loginPassword" [disabled]="loading" id="password" name="password" [placeholder]="'PASSWORD' | translate"
+                               style="width: 250px" type="password"/>
+                    </div>
+                    <div class="py-3" style="width: 250px">
+                        <cmp-button (click)="login()" [disabled]="loading" type="outline-wide-info">{{'LOGIN' | translate}}</cmp-button>
+                    </div>
+                </div>
+                <div (keydown.enter)="createAccount()" class="col-md-6">
+                    <h2>{{'CREATE_ACCOUNT' | translate}}</h2>
+                    <div class="py-2">
+                        <label for="username2">{{'USERNAME' | translate}}</label>
+                        <br/>
+                        <input [(ngModel)]="username" [disabled]="loading" id="username2" name="username" [placeholder]="'USERNAME' | translate"
+                               style="width: 250px" type="text"/>
+                    </div>
+                    <div class="py-2">
+                        <label for="email">{{'EMAIL' | translate}}</label>
+                        <br/>
+                        <input [(ngModel)]="email" [disabled]="loading" id="email" name="email" [placeholder]="'EMAIL' | translate"
+                               style="width: 250px" type="email"/>
+                    </div>
+                    <div class="py-2">
+                        <label for="password2">{{'PASSWORD' | translate}}</label>
+                        <br/>
+                        <input [(ngModel)]="password" [disabled]="loading" id="password2" name="password"
+                               [placeholder]="'PASSWORD' | translate" style="width: 250px" type="password"/>
+                    </div>
+                    <div class="py-2">
+                        <label for="confirm">{{'REPEAT_PASSWORD' | translate}}</label>
+                        <br/>
+                        <input [(ngModel)]="confirmPassword" [disabled]="loading" id="confirm" name="password" [placeholder]="'REPEAT_PASSWORD' | translate"
+                               style="width: 250px" type="password"/>
+                    </div>
+                    <div class="py-3" style="width: 250px">
+                        <cmp-button (click)="createAccount()" [disabled]="loading" type="outline-wide-info">
+                            <span *ngIf="!loading">{{'CREATE_ACCOUNT' | translate}}</span>
+                            <span *ngIf="loading"><i class="fas fa-circle-notch fa-spin"></i> </span>
+                        </cmp-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

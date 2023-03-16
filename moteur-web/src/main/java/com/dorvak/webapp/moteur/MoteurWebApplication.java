@@ -1,5 +1,6 @@
 package com.dorvak.webapp.moteur;
 
+import com.dorvak.webapp.moteur.security.bearer.CustomBearerAuthenticationManager;
 import com.dorvak.webapp.moteur.utils.LoggerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -16,6 +17,8 @@ public class MoteurWebApplication implements CommandLineRunner {
 
     @Autowired
     private ConfigurableApplicationContext ctx;
+    @Autowired
+    private CustomBearerAuthenticationManager customBearerAuthenticationManager;
 
     public static MoteurWebApplication getInstance() {
         return instance;
@@ -42,4 +45,7 @@ public class MoteurWebApplication implements CommandLineRunner {
         }
     }
 
+    public CustomBearerAuthenticationManager getCustomBearerAuthenticationManager() {
+        return customBearerAuthenticationManager;
+    }
 }

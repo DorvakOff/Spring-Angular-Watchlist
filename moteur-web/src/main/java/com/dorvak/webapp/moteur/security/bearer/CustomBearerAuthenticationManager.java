@@ -6,15 +6,12 @@ import com.dorvak.webapp.moteur.repository.UserRepository;
 import com.dorvak.webapp.moteur.security.keygen.KeyManager;
 import com.dorvak.webapp.moteur.utils.CharacterUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
 @Component
-public class CustomBearerAuthenticationManager implements AuthenticationManager {
+public class CustomBearerAuthenticationManager {
 
     @Autowired
     private KeyManager keyManager;
@@ -22,23 +19,21 @@ public class CustomBearerAuthenticationManager implements AuthenticationManager 
     @Autowired
     private UserRepository userRepository;
 
-    @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        CustomBearerAuthentication bearerAuthentication = (CustomBearerAuthentication) authentication;
+    public CustomBearerAuthentication authenticate(CustomBearerAuthentication authentication) {
 
-        String token = Objects.toString(bearerAuthentication.getCredentials(), "");
+        String token = Objects.toString(authentication.getCredentials(), "");
 
         if (CharacterUtils.isNotEmptyTrim(token)) {
             try {
                 DecodedJWT decodedJWT = keyManager.getJwtGenerator().verifyToken(token);
-                bearerAuthentication.setAuthenticated(true);
+                authentication.setAuthenticated(true);
                 String userId = decodedJWT.getClaim("userId").asString();
                 User user = userRepository.findById(userId).orElse(null);
-                bearerAuthentication.setDetails(user);
+                authentication.setDetails(user);
             } catch (Exception e) {
-                bearerAuthentication.setAuthenticated(false);
+                authentication.setAuthenticated(false);
             }
         }
-        return bearerAuthentication;
+        return authentication;
     }
 }

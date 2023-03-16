@@ -22,7 +22,7 @@ public class ServletController {
     @PostMapping("/execute")
     @ResponseBody
     public OutputData execute(@RequestBody ServletDto dto, HttpServletRequest request) {
-        InputData inputData = new InputData(dto.servletName(), dto.action(), request);
+        InputData inputData = new InputData(dto.servletName(), dto.action(), request, dto.data());
         return servletExecutorService.execute(inputData);
     }
 }

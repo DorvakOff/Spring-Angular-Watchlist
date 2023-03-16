@@ -1,6 +1,6 @@
 <div [style.width]="width" class="search">
   <div class="search-input">
-    <input (keyup)="onKeySearch($event)" [(ngModel)]="keywords" id="search" name="search" placeholder="Search"
+    <input (keyup)="onKeySearch($event)" [(ngModel)]="keywords" id="search" name="search" [placeholder]="placeholderValue"
            type="text"/>
     <img (click)="doSearch()" alt="Search icon" draggable="false" src="assets/images/icons/search.svg"/>
   </div>
@@ -14,7 +14,7 @@
   <div [hidden]="hideResults || results.length" class="search-results">
     <div class="search-result">
       <a class="search-result-text">
-        No results found
+        {{'NO_RESULTS' | translate}}
       </a>
     </div>
   </div>

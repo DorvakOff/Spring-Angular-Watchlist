@@ -18,3 +18,33 @@ body {
 
   background-color: var(--dark);
 }
+
+input {
+  background-color: var(--darker);
+  color: var(--text-light);
+  border: 1px solid var(--text-muted);
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease-in-out;
+  width: 100%;
+  margin: 0.5rem 10px;
+
+  &::placeholder {
+    color: var(--text-muted);
+  }
+
+  &:focus, &:active, &:hover {
+    border: 1px solid var(--info);
+    outline: none;
+  }
+}
+
+label {
+  color: var(--text-light);
+  font-size: 1.1rem;
+  margin: 0 10px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #ffffff;
+}

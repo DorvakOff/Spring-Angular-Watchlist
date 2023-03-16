@@ -1,53 +1,49 @@
 package com.dorvak.webapp.moteur.security;
 
+import com.dorvak.webapp.moteur.MoteurWebApplication;
 import com.dorvak.webapp.moteur.security.bearer.CustomBearerAuthentication;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.Authentication;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.GenericFilterBean;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.List;
 
+
+@Order(Integer.MIN_VALUE + 1)
 @Component
-public class SecurityFilter extends GenericFilterBean {
+public class SecurityFilter extends OncePerRequestFilter {
 
     private final List<String> AUTH_WHITELIST = List.of(
-            "/api/auth/login"
+            "/api/login",
+            "/api/register",
+            "/api/user"
     );
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest req = (HttpServletRequest) request;
-        HttpServletResponse res = (HttpServletResponse) response;
-        String authHeader = req.getHeader("Authorization");
-
-        if (req.getMethod().equals("OPTIONS") || AUTH_WHITELIST.contains(req.getRequestURI())) {
-            chain.doFilter(request, response);
-            return;
-        }
-
+    public void doFilterInternal(HttpServletRequest request, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
+        String authHeader = request.getHeader("Authorization");
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String authToken = authHeader.substring(7);
             CustomBearerAuthentication auth = new CustomBearerAuthentication(authToken);
-            Authentication result = authenticationManager.authenticate(auth);
+            CustomBearerAuthentication result = MoteurWebApplication.getInstance().getCustomBearerAuthenticationManager().authenticate(auth);
             if (result.isAuthenticated()) {
                 request.setAttribute("user", result.getDetails());
-                chain.doFilter(request, response);
+                chain.doFilter(request, res);
             } else {
                 res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
             }
         } else {
             res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
         }
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest req) {
+        return AUTH_WHITELIST.contains(req.getRequestURI());
     }
 }

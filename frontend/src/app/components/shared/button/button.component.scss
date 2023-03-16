@@ -30,4 +30,32 @@
   &.button-info {
     background-color: var(--info);
   }
+
+  &.button-wide {
+    width: 100%;
+  }
+
+  &.button-outline {
+    background-color: transparent;
+
+    &:hover {
+      filter: brightness(1);
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    &.button-danger {
+      color: var(--danger);
+      border: 1px solid var(--danger);
+    }
+
+    &.button-success {
+      color: var(--success);
+      border: 1px solid var(--success);
+    }
+
+    &.button-info {
+      color: var(--info);
+      border: 1px solid var(--info);
+    }
+  }
 }

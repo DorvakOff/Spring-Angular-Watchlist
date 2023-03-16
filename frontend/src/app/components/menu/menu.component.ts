@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {TranslationService} from "../../services/translation.service";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-menu',
@@ -8,7 +9,7 @@ import {TranslationService} from "../../services/translation.service";
 })
 export class MenuComponent implements OnInit {
 
-  constructor(public translation: TranslationService) {
+  constructor(public translation: TranslationService, public userService: UserService) {
 
   }
 

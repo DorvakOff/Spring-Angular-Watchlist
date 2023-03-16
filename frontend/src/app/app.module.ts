@@ -15,6 +15,7 @@ import {AlertBoxComponent} from "./components/alerts/alert-box/alert-box.compone
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import { WatchlistComponent } from './pages/watchlist/watchlist.component';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { WatchlistComponent } from './pages/watchlist/watchlist.component';
     MenuComponent,
     AlertComponent,
     AlertBoxComponent,
-    WatchlistComponent
+    WatchlistComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

@@ -7,6 +7,9 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.dorvak.webapp.moteur.MoteurWebApplication;
+import com.dorvak.webapp.moteur.model.User;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
@@ -20,12 +23,14 @@ public class JwtGenerator {
     private final Algorithm algorithm;
     private final JWTVerifier verifier;
     private final TemporalAmount expirationTime;
+    private final KeyManager keyManager;
 
     public JwtGenerator(KeyManager keyManager) {
         KeyGenerator keyGenerator = keyManager.addKeyGenerator(this.getClass());
         this.algorithm = Algorithm.RSA256((RSAPublicKey) keyGenerator.getPublicKey(), (RSAPrivateKey) keyGenerator.getPrivateKey());
         this.verifier = JWT.require(algorithm).withIssuer(MoteurWebApplication.APP_NAME).build();
         this.expirationTime = Duration.ofDays(7);
+        this.keyManager = keyManager;
     }
 
     public String generateToken(long userId) throws JWTCreationException {
@@ -41,6 +46,24 @@ public class JwtGenerator {
     }
 
     public DecodedJWT verifyToken(String token) throws JWTVerificationException {
-        return verifier.verify(token);
+        try {
+            if (token != null && token.startsWith("Bearer ")) {
+                token = token.substring(7);
+            } else {
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+            }
+            return verifier.verify(token);
+        } catch (JWTVerificationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    public User getUserFromToken(String token) {
+        DecodedJWT jwt = verifyToken(token);
+        User user = keyManager.getUserRepository().findById(jwt.getClaim("userId").asString()).orElse(null);
+        if (user == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
+        return user;
     }
 }

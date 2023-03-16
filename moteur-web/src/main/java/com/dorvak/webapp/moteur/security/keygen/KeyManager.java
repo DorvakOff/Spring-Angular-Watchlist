@@ -1,6 +1,8 @@
 package com.dorvak.webapp.moteur.security.keygen;
 
+import com.dorvak.webapp.moteur.repository.UserRepository;
 import com.dorvak.webapp.moteur.utils.LoggerUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -11,6 +13,8 @@ public class KeyManager {
 
     private final Map<String, KeyGenerator> keyGenerators;
     private final JwtGenerator jwtGenerator;
+    @Autowired
+    private UserRepository userRepository;
 
     public KeyManager() {
         keyGenerators = new HashMap<>();
@@ -33,5 +37,9 @@ public class KeyManager {
 
     public JwtGenerator getJwtGenerator() {
         return jwtGenerator;
+    }
+
+    public UserRepository getUserRepository() {
+        return userRepository;
     }
 }

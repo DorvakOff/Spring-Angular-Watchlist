@@ -1,4 +1,21 @@
 {
   "SEARCH": "Recherche",
-  "WATCHLIST": "Liste de suivi"
+  "WATCHLIST": "Liste de suivi",
+  "LOGIN_OR_REGISTER": "Connexion / Inscription",
+  "LOGOUT": "Déconnexion",
+  "SEARCH_PLACEHOLDER_DEFAULT": "Rechercher...",
+  "SEARCH_PLACEHOLDER": "Rechercher un film, une série...",
+  "NO_RESULTS": "Aucun résultat",
+  "LIKE": "J'aime",
+  "DISLIKE": "Je n'aime pas",
+  "SHARE": "Partager",
+  "SEASON": "Saison",
+  "SEASONS": "Saisons",
+  "LOGIN": "Connexion",
+  "CREATE_ACCOUNT": "Créer un compte",
+  "EMAIL": "Email",
+  "PASSWORD": "Mot de passe",
+  "REPEAT_PASSWORD": "Répéter le mot de passe",
+  "USERNAME": "Nom d'utilisateur",
+  "LOGIN_OR_CREATE": "Se connecter ou créer un compte"
 }

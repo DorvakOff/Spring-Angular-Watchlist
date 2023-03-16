@@ -1,5 +1,6 @@
 /.idea/
-/WEB-INF/
+/WEB-INF/security/
+/WEB-INF/config.json
 *.iml
 .angular/
 dist/
