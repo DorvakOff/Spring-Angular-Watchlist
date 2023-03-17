@@ -34,7 +34,6 @@ export class SearchComponent implements OnInit {
         this.searchResult = undefined
         return
       }
-      response.Search = response.Search.filter(movie => movie.Poster !== "N/A")
       this.searchResult = response
     })
   }
