@@ -3,6 +3,7 @@ import {OMDBService} from "../../services/omdb.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {OMDBMovie} from "../../models/OMDB";
 import {WatchlistService} from "../../services/watchlist.service";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'cmp-movie',
@@ -13,7 +14,7 @@ export class MovieComponent implements OnInit {
 
   movie: OMDBMovie | undefined
 
-  constructor(private omdb: OMDBService, private activatedRoute: ActivatedRoute, private router: Router, public watchlistService: WatchlistService) {
+  constructor(public userService: UserService, private omdb: OMDBService, private activatedRoute: ActivatedRoute, private router: Router, public watchlistService: WatchlistService) {
     this.activatedRoute.params.subscribe(params => {
       this.omdb.getMovieDetails(params['id']).subscribe(response => {
         if (response.Response === "False") {

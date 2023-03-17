@@ -59,7 +59,7 @@
                         </div>
                     </div>
 
-                    <cmp-button (click)="watchlistService.addOrRemoveFromWatchlist(movie)"
+                    <cmp-button *ngIf="userService.user" (click)="watchlistService.addOrRemoveFromWatchlist(movie)"
                                 [type]="watchlistService.isOnWatchlist(movie.imdbID) ? 'danger' : 'success'">
                         <i *ngIf="!watchlistService.isOnWatchlist(movie.imdbID)" class="fa-solid fa-heart"></i><i
                             *ngIf="watchlistService.isOnWatchlist(movie.imdbID)"

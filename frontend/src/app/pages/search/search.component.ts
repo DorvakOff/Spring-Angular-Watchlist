@@ -3,6 +3,7 @@ import {OMDBMovie, OMDBSearchResult} from "../../models/OMDB";
 import {OMDBService} from "../../services/omdb.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {WatchlistService} from "../../services/watchlist.service";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'cmp-search',
@@ -14,7 +15,7 @@ export class SearchComponent implements OnInit {
   searchResult?: OMDBSearchResult
   keywords: string = '';
 
-  constructor(public omdb: OMDBService, private activatedRoute: ActivatedRoute, private router: Router, public watchlistService: WatchlistService) {
+  constructor(public userService: UserService, public omdb: OMDBService, private activatedRoute: ActivatedRoute, private router: Router, public watchlistService: WatchlistService) {
   }
 
   ngOnInit() {

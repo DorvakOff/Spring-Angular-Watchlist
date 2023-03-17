@@ -1,23 +1,21 @@
 <cmp-searchbar (onSearch)="search($event)" [defaultKeywords]="keywords" [placeholder]="'SEARCH_PLACEHOLDER'"
                [shouldShowResults]="false"></cmp-searchbar>
 
-<div class="search-results">
-    <div *ngIf="searchResult && searchResult.totalResults > 0">
-        <div (click)="onMovieClick(movie)" *ngFor="let movie of searchResult.Search" class="search-result">
-            <img (error)="onErrorImage($event)" [alt]="movie.Title" [src]="movie.Poster" draggable="false"/>
-            <div class="search-result-info">
-                <h3>{{movie.Title}}</h3>
-                <p>{{movie.Year}}</p>
-                <cmp-button (click)="watchlistService.addOrRemoveFromWatchlist(movie); $event.stopPropagation();"
-                            [type]="watchlistService.isOnWatchlist(movie.imdbID) ? 'danger' : 'success'">
-                    <i *ngIf="!watchlistService.isOnWatchlist(movie.imdbID)" class="fa-solid fa-heart"></i><i
-                        *ngIf="watchlistService.isOnWatchlist(movie.imdbID)"
-                        class="fas fa-heart-broken"></i>&nbsp;<span>{{(watchlistService.isOnWatchlist(movie.imdbID) ? 'DISLIKE' : 'LIKE') | translate}}</span>
-                </cmp-button>
-            </div>
-        </div>
+<div *ngIf="searchResult && searchResult.totalResults > 0" class="search-results">
+  <div (click)="onMovieClick(movie)" *ngFor="let movie of searchResult.Search" class="search-result">
+    <img (error)="onErrorImage($event)" [alt]="movie.Title" [src]="movie.Poster" draggable="false"/>
+    <div class="search-result-info">
+      <h3>{{movie.Title}}</h3>
+      <p>{{movie.Year}}</p>
+      <cmp-button *ngIf="userService.user" (click)="watchlistService.addOrRemoveFromWatchlist(movie); $event.stopPropagation();"
+                  [type]="watchlistService.isOnWatchlist(movie.imdbID) ? 'danger' : 'success'">
+        <i *ngIf="!watchlistService.isOnWatchlist(movie.imdbID)" class="fa-solid fa-heart"></i><i
+        *ngIf="watchlistService.isOnWatchlist(movie.imdbID)"
+        class="fas fa-heart-broken"></i>&nbsp;<span>{{(watchlistService.isOnWatchlist(movie.imdbID) ? 'DISLIKE' : 'LIKE') | translate}}</span>
+      </cmp-button>
     </div>
-    <div *ngIf="!searchResult || searchResult.totalResults === 0" class="no-results">
-        <p>{{'NO_RESULTS' | translate}}</p>
-    </div>
+  </div>
+</div>
+<div *ngIf="!searchResult || searchResult.totalResults === 0" class="no-results">
+  <p>{{'NO_RESULTS' | translate}}</p>
 </div>
