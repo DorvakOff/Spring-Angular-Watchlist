@@ -61,3 +61,14 @@
   height: 80vh;
   user-select: none;
 }
+
+// Mobile
+@media only screen and (max-width: 600px) {
+  .search-results {
+    margin-top: 30px;
+
+    .search-result {
+      width: 30%;
+    }
+  }
+}

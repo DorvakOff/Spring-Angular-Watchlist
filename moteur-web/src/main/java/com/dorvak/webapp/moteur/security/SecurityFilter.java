@@ -18,10 +18,8 @@ import java.util.List;
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
 
-    private final List<String> AUTH_WHITELIST = List.of(
-            "/api/login",
-            "/api/register",
-            "/api/user"
+    private final List<String> AUTH_BLACKLIST = List.of(
+            "/api/servlet/execute"
     );
 
     @Override
@@ -50,6 +48,6 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest req) {
-        return AUTH_WHITELIST.contains(req.getRequestURI());
+        return !AUTH_BLACKLIST.contains(req.getRequestURI());
     }
 }

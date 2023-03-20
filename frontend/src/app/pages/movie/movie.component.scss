@@ -76,7 +76,7 @@
             padding: 0 5px;
             margin-right: 5px;
             font-size: 15px;
-            font-weight: 500;
+            font-weight: bold;
             line-height: 1.5;
             text-align: center;
             white-space: nowrap;
@@ -238,5 +238,24 @@
     opacity: 1;
     transition: .5s;
     transition-delay: .5s;
+  }
+}
+
+// Mobile
+@media only screen and (max-width: 600px) {
+  .movie-detail {
+    height: 80vh;
+    font-size: 12px !important;
+
+    img {
+      height: 450px;
+      object-fit: cover;
+      position: fixed;
+      // center the image
+      left: 15%;
+      top: 30%;
+      z-index: -1;
+      filter: brightness(0.4);
+    }
   }
 }

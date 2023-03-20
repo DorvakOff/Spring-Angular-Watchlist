@@ -1,4 +1,4 @@
-<cmp-searchbar (onSearch)="search($event)" [defaultKeywords]="keywords" [placeholder]="'SEARCH_PLACEHOLDER'"
+<cmp-searchbar class="searchbar" (onSearch)="search($event)" [defaultKeywords]="keywords" [placeholder]="'SEARCH_PLACEHOLDER'"
                [shouldShowResults]="false"></cmp-searchbar>
 
 <div *ngIf="searchResult && searchResult.totalResults > 0" class="search-results">

@@ -1,0 +1,19 @@
+<div class="welcome">
+  <h1>Home</h1>
+  <p>Welcome to the home page</p>
+</div>
+
+<div>
+  <div class="popular">
+    <h2>Popular</h2>
+    <div class="trends">
+      <div *ngFor="let movie of mostPopularMovies" class="trend" (click)="onClickMovie(movie)">
+        <img [src]="movie.poster" alt="movie.title" draggable="false">
+        <div class="details">
+          <h3>{{movie.title}}</h3>
+          <p>{{movie.year}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
