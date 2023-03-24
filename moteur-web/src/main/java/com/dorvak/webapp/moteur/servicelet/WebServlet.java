@@ -28,6 +28,10 @@ public abstract class WebServlet {
         this.sendData(outputData);
     }
 
+    public void toEdit(InputData inputData, OutputData outputData) {
+        this.sendData(outputData);
+    }
+
     protected final void setData(String key, Object value) {
         Objects.requireNonNull(key);
         Objects.requireNonNull(value);

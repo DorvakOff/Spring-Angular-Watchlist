@@ -1,12 +1,29 @@
-<div class="search-results">
-    <div *ngFor="let movie of watchlistService.watchlist" class="search-result" (click)="onMovieClick(movie)">
-      <img [alt]="movie.title" [src]="movie.poster" draggable="false" (error)="onErrorImage($event)"/>
+<div *ngIf="watchlistService.watchlist && userService.user">
+  <div class="watchlist-header">
+    <textarea [(ngModel)]="watchlistService.watchlist.description" class="description" disabled></textarea>
+    <div class="watchlist-actions">
+      <cmp-button (click)="openShare()" *ngIf="watchlistService.watchlist.publicList">
+        <span>{{'SHARE' | translate}} <i class="fa-solid fa-link"></i></span>
+      </cmp-button>
+      <cmp-button (onClick)="toggleVisibility()" [disabled]="true"
+                  [type]="watchlistService.watchlist.publicList ? 'success' : 'danger'">
+        <span *ngIf="watchlistService.watchlist.publicList">{{'PUBLIC' | translate}} <i
+          class="fa-solid fa-lock-open"></i></span>
+        <span *ngIf="!watchlistService.watchlist.publicList">{{'PRIVATE' | translate}} <i class="fa-solid fa-lock"></i></span>
+      </cmp-button>
+    </div>
+  </div>
+  <div class="search-results">
+    <div (click)="onMovieClick(movie)" *ngFor="let movie of watchlistService.watchlist.watchlistItems"
+         class="search-result">
+      <img (error)="onErrorImage($event)" [alt]="movie.title" [src]="movie.poster" draggable="false"/>
       <div class="search-result-info">
         <h3>{{movie.title}}</h3>
         <p>{{movie.year}}</p>
       </div>
     </div>
-</div>
-<div *ngIf="watchlistService.watchlist.length === 0" class="no-results">
-  <p>No movies in your watchlist</p>
+  </div>
+  <div *ngIf="!watchlistService.watchlist || watchlistService.watchlist.watchlistItems.length === 0" class="no-results">
+    <p>No movies in your watchlist</p>
+  </div>
 </div>

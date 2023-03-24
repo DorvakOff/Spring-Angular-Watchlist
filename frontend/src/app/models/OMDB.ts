@@ -43,3 +43,10 @@ export interface JSONMovie {
   imdbID: string;
   poster: string;
 }
+
+export interface Watchlist {
+  watchlistItems: JSONMovie[];
+  description: string;
+  ownerID: string;
+  publicList: boolean;
+}

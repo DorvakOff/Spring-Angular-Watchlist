@@ -62,6 +62,27 @@
   user-select: none;
 }
 
+.watchlist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px;
+
+  .description {
+    font-size: 20px;
+    margin-left: 10px;
+    font-weight: 500;
+    width: 80%;
+    color: #ffffff;
+  }
+
+  .watchlist-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
 // Mobile
 @media only screen and (max-width: 600px) {
   .search-results {

@@ -14,9 +14,18 @@
   display: inline-block;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
 
+  &:disabled {
+    filter: brightness(0.5);
+  }
+
   &:hover {
     cursor: pointer;
     filter: brightness(0.9);
+
+    &:disabled {
+      filter: brightness(0.6);
+      cursor: not-allowed;
+    }
   }
 
   &.button-danger {

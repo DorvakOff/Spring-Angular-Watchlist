@@ -10,7 +10,8 @@
           <div class="py-2">
             <label for="email1">{{'EMAIL_OR_USERNAME' | translate}}</label>
             <br/>
-            <input [(ngModel)]="loginEmail" [disabled]="loading" [placeholder]="'EMAIL_OR_USERNAME' | translate" id="email1"
+            <input [(ngModel)]="loginEmail" [disabled]="loading" [placeholder]="'EMAIL_OR_USERNAME' | translate"
+                   id="email1"
                    name="email"
                    style="width: 250px" type="email"/>
           </div>
@@ -23,7 +24,10 @@
           </div>
           <div class="py-3" style="width: 250px">
             <cmp-button (click)="login()" [disabled]="loading"
-                        type="outline-wide-info">{{'LOGIN' | translate}}</cmp-button>
+                        type="outline-wide-info">
+              <span *ngIf="!loading">{{'LOGIN' | translate}}</span>
+              <span *ngIf="loading"><i class="fas fa-circle-notch fa-spin"></i> </span>
+            </cmp-button>
           </div>
         </div>
         <!-- create account form -->
@@ -51,7 +55,8 @@
           <div class="py-2">
             <label for="confirm">{{'REPEAT_PASSWORD' | translate}}</label>
             <br/>
-            <input [(ngModel)]="confirmPassword" [disabled]="loading" [placeholder]="'REPEAT_PASSWORD' | translate" id="confirm"
+            <input [(ngModel)]="confirmPassword" [disabled]="loading" [placeholder]="'REPEAT_PASSWORD' | translate"
+                   id="confirm"
                    name="password"
                    style="width: 250px" type="password"/>
           </div>

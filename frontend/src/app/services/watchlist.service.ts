@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {JSONMovie, OMDBMovie} from "../models/OMDB";
+import {JSONMovie, OMDBMovie, Watchlist} from "../models/OMDB";
 import {ServletRequesterService} from "./servlet-requester.service";
 import {AlertHandlerService} from "./alert-handler.service";
 
@@ -8,7 +8,7 @@ import {AlertHandlerService} from "./alert-handler.service";
 })
 export class WatchlistService {
 
-  watchlist: JSONMovie[] = [];
+  watchlist?: Watchlist;
 
   constructor(private servletRequesterService: ServletRequesterService, private alertHandler: AlertHandlerService) {
   }
@@ -26,19 +26,23 @@ export class WatchlistService {
     this.servletRequesterService.requestAction('WatchlistServlet', 'add', data).subscribe(response => {
       this.watchlist = response.data.watchlist
     }, error => this.alertHandler.raiseError(error));
-    this.watchlist.push(movie);
+    if (this.watchlist) {
+      this.watchlist.watchlistItems.push(movie);
+    }
   }
 
   removeFromWatchlist(imdbID: string) {
     this.servletRequesterService.requestAction('WatchlistServlet', 'delete', {imdbID: imdbID}).subscribe(response => {
       this.watchlist = response.data.watchlist
     }, error => this.alertHandler.raiseError(error));
-    this.watchlist = this.watchlist.filter(watchlistMovie => watchlistMovie.imdbID !== imdbID);
+    if (this.watchlist) {
+      this.watchlist.watchlistItems = this.watchlist.watchlistItems.filter(watchlistMovie => watchlistMovie.imdbID !== imdbID);
+    }
   }
 
   isOnWatchlist(imdbID: string): boolean {
     if (!this.watchlist) return false;
-    return this.watchlist.some(watchlistMovie => watchlistMovie.imdbID === imdbID);
+    return this.watchlist.watchlistItems.some(watchlistMovie => watchlistMovie.imdbID === imdbID);
   }
 
   addOrRemoveFromWatchlist(movie: OMDBMovie) {

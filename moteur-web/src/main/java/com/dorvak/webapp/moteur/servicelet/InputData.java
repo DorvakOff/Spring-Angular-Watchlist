@@ -42,4 +42,8 @@ public class InputData extends IOData {
         return Objects.toString(data.get(key), "");
     }
 
+    public boolean has(String key) {
+        return data.containsKey(key);
+    }
+
 }

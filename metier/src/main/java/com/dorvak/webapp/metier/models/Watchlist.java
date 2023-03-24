@@ -17,12 +17,18 @@ public class Watchlist {
     @Id
     private String ownerID;
 
+    private String description;
+
+    private boolean publicList;
+
     public Watchlist() {
     }
 
     public Watchlist(List<JSONMovie> watchlistItems, String ownerID) {
         this.watchlistItems = watchlistItems;
         this.ownerID = ownerID;
+        this.publicList = false;
+        this.description = "";
     }
 
     public List<JSONMovie> getWatchlistItems() {
@@ -49,4 +55,19 @@ public class Watchlist {
         this.watchlistItems.removeIf(movie -> movie.getImdbID().equals(imdbID));
     }
 
+    public boolean isPublicList() {
+        return publicList;
+    }
+
+    public void setPublicList(boolean publicList) {
+        this.publicList = publicList;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

@@ -19,7 +19,7 @@ body {
   background-color: var(--dark);
 }
 
-input {
+input, textarea {
   background-color: var(--darker);
   color: var(--text-light);
   border: 1px solid var(--text-muted);
@@ -33,7 +33,17 @@ input {
     color: var(--text-muted);
   }
 
+  &:not(.resize) {
+    resize: none;
+  }
+
   &:focus, &:active, &:hover {
+    &[disabled] {
+      border: 1px solid var(--text-muted);
+      outline: none;
+      cursor: not-allowed;
+    }
+
     border: 1px solid var(--info);
     outline: none;
   }

@@ -28,6 +28,9 @@ export class ServletRequesterService {
       }).subscribe(response => {
         this.handlePossibleError(response)
         subscriber.next(response)
+      }, error => {
+        this.alertHandler.raiseError(error.message)
+        subscriber.error(error)
       })
     })
   }
