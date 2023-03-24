@@ -3,6 +3,7 @@ package com.dorvak.webapp.metier.servlet;
 import com.dorvak.webapp.metier.AppAutowire;
 import com.dorvak.webapp.metier.models.JSONMovie;
 import com.dorvak.webapp.metier.models.Watchlist;
+import com.dorvak.webapp.metier.repositories.WatchlistRepository;
 import com.dorvak.webapp.moteur.servicelet.InputData;
 import com.dorvak.webapp.moteur.servicelet.OutputData;
 import com.dorvak.webapp.moteur.servicelet.WebServlet;
@@ -12,10 +13,10 @@ import java.util.ArrayList;
 public class WatchlistServlet extends WebServlet {
 
     private static Watchlist getWatchlist(InputData inputData) {
-        Watchlist watchlist = AppAutowire.getInstance().getWatchlistRepository().findByOwnerID(inputData.getUser().getUserId());
+        Watchlist watchlist = AppAutowire.getInstance().getRepository(WatchlistRepository.class).findByOwnerID(inputData.getUser().getUserId());
         if (watchlist == null) {
             watchlist = new Watchlist(new ArrayList<>(), inputData.getUser().getUserId());
-            AppAutowire.getInstance().getWatchlistRepository().save(watchlist);
+            AppAutowire.getInstance().getRepository(WatchlistRepository.class).save(watchlist);
         }
         return watchlist;
     }
@@ -28,7 +29,7 @@ public class WatchlistServlet extends WebServlet {
 
         watchlist.addMovie(movie);
 
-        AppAutowire.getInstance().getWatchlistRepository().save(watchlist);
+        AppAutowire.getInstance().getRepository(WatchlistRepository.class).save(watchlist);
 
         setData("watchlist", watchlist);
         this.sendData(outputData);
@@ -51,7 +52,7 @@ public class WatchlistServlet extends WebServlet {
 
         watchlist.removeMovie(imdbID);
 
-        AppAutowire.getInstance().getWatchlistRepository().save(watchlist);
+        AppAutowire.getInstance().getRepository(WatchlistRepository.class).save(watchlist);
 
         setData("watchlist", watchlist);
         this.sendData(outputData);
@@ -71,7 +72,7 @@ public class WatchlistServlet extends WebServlet {
         }
 
         if (inputData.has("description") || inputData.has("publicList")) {
-            AppAutowire.getInstance().getWatchlistRepository().save(watchlist);
+            AppAutowire.getInstance().getRepository(WatchlistRepository.class).save(watchlist);
         }
 
         this.sendData(outputData);

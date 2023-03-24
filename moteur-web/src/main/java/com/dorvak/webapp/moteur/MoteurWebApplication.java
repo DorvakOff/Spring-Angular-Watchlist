@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableJpaRepositories("com.dorvak.webapp")
 @ComponentScan("com.dorvak.webapp")
 @EntityScan("com.dorvak.webapp")
+@EnableScheduling
 public class MoteurWebApplication implements CommandLineRunner {
 
     public static final String VERSION = "1.0.0";
@@ -45,7 +47,7 @@ public class MoteurWebApplication implements CommandLineRunner {
 
         Thread shutdownHook = new Thread(this::shutdown, "ShutdownHook");
         Runtime.getRuntime().addShutdownHook(shutdownHook);
-        LoggerUtils.info("MoteurWebApplication started.");
+        LoggerUtils.info("MoteurWebApplication started (v%s).", VERSION);
     }
 
     private void shutdown() {

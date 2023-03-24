@@ -1,9 +1,6 @@
 package com.dorvak.webapp.metier;
 
-import com.dorvak.webapp.metier.models.Watchlist;
-import com.dorvak.webapp.metier.repositories.WatchlistRepository;
 import com.dorvak.webapp.moteur.MoteurWebApplication;
-import org.springframework.data.repository.support.Repositories;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,12 +16,19 @@ public class AppAutowire {
         return instance == null ? new AppAutowire() : instance;
     }
 
-    public WatchlistRepository getWatchlistRepository() {
-        Repositories repositories = new Repositories(MoteurWebApplication.getInstance().getApplicationContext());
-        return (WatchlistRepository) repositories.getRepositoryFor(Watchlist.class).orElseThrow();
+    public <R> R getRepository(Class<R> clazz) {
+        return getBean(clazz);
     }
 
     public <S> S getService(Class<S> clazz) {
+        return getBean(clazz);
+    }
+
+    public <C> C getComponent(Class<C> clazz) {
+        return getBean(clazz);
+    }
+
+    public <B> B getBean(Class<B> clazz) {
         return MoteurWebApplication.getInstance().getApplicationContext().getBean(clazz);
     }
 }
