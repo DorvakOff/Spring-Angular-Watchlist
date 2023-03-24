@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -18,7 +19,7 @@ public class InputData extends IOData {
         super(servletName, action);
         this.request = request;
         this.user = (User) request.getAttribute("user");
-        this.data = data;
+        this.data = data == null ? new HashMap<>() : data;
     }
 
     public HttpServletRequest getRequest() {

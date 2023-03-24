@@ -7,20 +7,24 @@ import org.springframework.data.repository.support.Repositories;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RepositoryAutowire {
+public class AppAutowire {
 
-    private static RepositoryAutowire instance;
+    private static AppAutowire instance;
 
-    private RepositoryAutowire() {
+    private AppAutowire() {
         instance = this;
     }
 
-    public static RepositoryAutowire getInstance() {
-        return instance == null ? new RepositoryAutowire() : instance;
+    public static AppAutowire getInstance() {
+        return instance == null ? new AppAutowire() : instance;
     }
 
     public WatchlistRepository getWatchlistRepository() {
         Repositories repositories = new Repositories(MoteurWebApplication.getInstance().getApplicationContext());
         return (WatchlistRepository) repositories.getRepositoryFor(Watchlist.class).orElseThrow();
+    }
+
+    public <S> S getService(Class<S> clazz) {
+        return MoteurWebApplication.getInstance().getApplicationContext().getBean(clazz);
     }
 }

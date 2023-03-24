@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {TrendsService} from "../../services/trends.service";
+import {Component, OnInit} from '@angular/core';
 import {JSONMovie} from "../../models/OMDB";
 import {Router} from "@angular/router";
+import {ServletRequesterService} from "../../services/servlet-requester.service";
 
 @Component({
   selector: 'cmp-home',
@@ -12,11 +12,12 @@ export class HomeComponent implements OnInit {
 
   mostPopularMovies: JSONMovie[] = []
 
-  constructor(private trendsService: TrendsService, private router: Router) { }
+  constructor(private servletRequester: ServletRequesterService, private router: Router) {
+  }
 
   ngOnInit(): void {
-    this.trendsService.getPopular().subscribe((data) => {
-      this.mostPopularMovies = data
+    this.servletRequester.requestAction('TrendsServlet', 'init').subscribe(response => {
+      this.mostPopularMovies = response.data.popular
     })
   }
 

@@ -1,6 +1,6 @@
 package com.dorvak.webapp.metier.servlet;
 
-import com.dorvak.webapp.metier.RepositoryAutowire;
+import com.dorvak.webapp.metier.AppAutowire;
 import com.dorvak.webapp.metier.models.JSONMovie;
 import com.dorvak.webapp.metier.models.Watchlist;
 import com.dorvak.webapp.moteur.servicelet.InputData;
@@ -12,10 +12,10 @@ import java.util.ArrayList;
 public class WatchlistServlet extends WebServlet {
 
     private static Watchlist getWatchlist(InputData inputData) {
-        Watchlist watchlist = RepositoryAutowire.getInstance().getWatchlistRepository().findByOwnerID(inputData.getUser().getUserId());
+        Watchlist watchlist = AppAutowire.getInstance().getWatchlistRepository().findByOwnerID(inputData.getUser().getUserId());
         if (watchlist == null) {
             watchlist = new Watchlist(new ArrayList<>(), inputData.getUser().getUserId());
-            RepositoryAutowire.getInstance().getWatchlistRepository().save(watchlist);
+            AppAutowire.getInstance().getWatchlistRepository().save(watchlist);
         }
         return watchlist;
     }
@@ -28,7 +28,7 @@ public class WatchlistServlet extends WebServlet {
 
         watchlist.addMovie(movie);
 
-        RepositoryAutowire.getInstance().getWatchlistRepository().save(watchlist);
+        AppAutowire.getInstance().getWatchlistRepository().save(watchlist);
 
         setData("watchlist", watchlist);
         this.sendData(outputData);
@@ -51,7 +51,7 @@ public class WatchlistServlet extends WebServlet {
 
         watchlist.removeMovie(imdbID);
 
-        RepositoryAutowire.getInstance().getWatchlistRepository().save(watchlist);
+        AppAutowire.getInstance().getWatchlistRepository().save(watchlist);
 
         setData("watchlist", watchlist);
         this.sendData(outputData);
@@ -71,7 +71,7 @@ public class WatchlistServlet extends WebServlet {
         }
 
         if (inputData.has("description") || inputData.has("publicList")) {
-            RepositoryAutowire.getInstance().getWatchlistRepository().save(watchlist);
+            AppAutowire.getInstance().getWatchlistRepository().save(watchlist);
         }
 
         this.sendData(outputData);

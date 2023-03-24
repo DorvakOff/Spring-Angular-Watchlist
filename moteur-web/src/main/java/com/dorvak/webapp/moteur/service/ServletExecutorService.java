@@ -2,6 +2,7 @@ package com.dorvak.webapp.moteur.service;
 
 import com.dorvak.webapp.moteur.exception.ServletExecutionException;
 import com.dorvak.webapp.moteur.servicelet.InputData;
+import com.dorvak.webapp.moteur.servicelet.NoAuth;
 import com.dorvak.webapp.moteur.servicelet.OutputData;
 import com.dorvak.webapp.moteur.servicelet.WebServlet;
 import com.dorvak.webapp.moteur.utils.CharacterUtils;
@@ -9,6 +10,7 @@ import com.dorvak.webapp.moteur.utils.LoggerUtils;
 import org.reflections.Reflections;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Optional;
 
@@ -61,5 +63,19 @@ public class ServletExecutorService {
 
     public Map<String, Class<? extends WebServlet>> getServlets() {
         return servlets;
+    }
+
+    public boolean servletNeedAuth(String servlet, String action) {
+        try {
+            Class<?> servletClass = Optional.ofNullable(servlets.get(servlet)).orElseThrow(() -> new ServletExecutionException("Servlet not found: %s", servlet));
+            if (servletClass.isAnnotationPresent(NoAuth.class)) {
+                return false;
+            }
+            String methodName = "to" + CharacterUtils.capitalize(action);
+            Method m = servletClass.getMethod(methodName, InputData.class, OutputData.class);
+            return !m.isAnnotationPresent(NoAuth.class);
+        } catch (Exception e) {
+            return true;
+        }
     }
 }
