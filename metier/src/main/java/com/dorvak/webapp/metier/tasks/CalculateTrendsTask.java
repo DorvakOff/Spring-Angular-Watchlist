@@ -24,7 +24,7 @@ public class CalculateTrendsTask implements Runnable {
     @Override
     public void run() {
         AtomicInteger counter = new AtomicInteger(1);
-        List<TrendingJsonMovie> movies = trendsService.getTopMovies().stream()
+        List<TrendingJsonMovie> movies = trendsService.loadPopularMovies().stream()
                 .map(jsonMovie -> new TrendingJsonMovie(counter.getAndIncrement(), jsonMovie))
                 .toList();
 
