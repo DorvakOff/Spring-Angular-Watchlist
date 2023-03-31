@@ -36,7 +36,6 @@ export class UserService {
   }
 
   getUser(): Observable<User> {
-    this.watchlistService.loadWatchlist()
     return this.http.get<User>(`${this.url}/user`, {headers: this.headers})
   }
 
@@ -52,6 +51,7 @@ export class UserService {
     return new Observable(observer => {
       if (this.user) {
         observer.next(this.user)
+        this.watchlistService.loadWatchlist()
         observer.complete()
         return
       }
@@ -59,6 +59,7 @@ export class UserService {
         localStorage.setItem('token', token)
         this.getUser().subscribe(user => {
           this.user = user
+          this.watchlistService.loadWatchlist()
           observer.next(user)
           observer.complete()
         }, error => {
@@ -73,10 +74,10 @@ export class UserService {
   autoLogin() {
     if (!this.autoLoginLoading && !this.user && localStorage.getItem('token')) {
       this.autoLoginLoading = true
-      this.watchlistService.loadWatchlist()
       this.getUser().subscribe(user => {
         this.user = user
         this.autoLoginLoading = false
+        this.watchlistService.loadWatchlist()
       }, () => {
         this.autoLoginLoading = false
         localStorage.removeItem('token')

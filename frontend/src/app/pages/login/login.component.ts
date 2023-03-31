@@ -51,17 +51,10 @@ export class LoginComponent implements OnInit {
       return
     }
 
-    this.userService.login(this.loginEmail, this.loginPassword).subscribe(token => {
-      localStorage.setItem('token', token)
-      this.userService.getUser().subscribe(user => {
-        this.userService.user = user
-        this.alertHandler.sendSuccess('Login successful', 'You have been logged in successfully')
-        this.navigationService.navigate(this.redirectUrl)
-        this.loading = false
-      }, error => {
-        this.loading = false
-        this.alertHandler.raiseError(error)
-      })
+    this.userService.auth(this.loginEmail, this.loginPassword).subscribe(() => {
+      this.alertHandler.sendSuccess('Login successful', 'You have been logged in successfully')
+      this.navigationService.navigate(this.redirectUrl)
+      this.loading = false
     }, error => {
       this.loading = false
       if (error.status === 401) {
