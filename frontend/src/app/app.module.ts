@@ -17,6 +17,7 @@ import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import { WatchlistComponent } from './pages/watchlist/watchlist.component';
 import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
+import { MovieListComponent } from './components/shared/movie-list/movie-list.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { HomeComponent } from './pages/home/home.component';
     AlertBoxComponent,
     WatchlistComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    MovieListComponent
   ],
   imports: [
     BrowserModule,

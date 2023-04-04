@@ -1,0 +1,18 @@
+<div *ngIf="movies && movies.length > 0" class="search-results">
+  <div (click)="onMovieClick(movie)" *ngFor="let movie of movies" class="search-result">
+    <img (error)="onErrorImage($event)" [alt]="movie.title" [src]="movie.poster" draggable="false"/>
+    <div class="search-result-info">
+      <h3>{{movie.title}}</h3>
+      <p>{{movie.year}}</p>
+      <cmp-button *ngIf="userService.user && watchlistButton" (click)="watchlistService.addOrRemoveFromWatchlist(movie); $event.stopPropagation();"
+                  [type]="watchlistService.isOnWatchlist(movie.imdbID) ? 'danger' : 'success'">
+        <i *ngIf="!watchlistService.isOnWatchlist(movie.imdbID)" class="fa-solid fa-heart"></i><i
+        *ngIf="watchlistService.isOnWatchlist(movie.imdbID)"
+        class="fas fa-heart-broken"></i>&nbsp;<span>{{(watchlistService.isOnWatchlist(movie.imdbID) ? 'DISLIKE' : 'LIKE') | translate}}</span>
+      </cmp-button>
+    </div>
+  </div>
+</div>
+<div *ngIf="!movies || movies.length === 0" class="no-results">
+  <p>{{'NOTHING_HERE' | translate}}</p>
+</div>

@@ -1,11 +1,11 @@
-<div *ngIf="watchlistService.watchlist && userService.user">
+<div *ngIf="watchlistService.watchlist && userService.user && !watchlistId">
   <div class="watchlist-header">
-    <textarea [(ngModel)]="watchlistService.watchlist.description" class="description" disabled></textarea>
+    <textarea [(ngModel)]="watchlistService.watchlist.description" class="description" [placeholder]="'ENTER_DESCRIPTION' | translate" (keyup)="onDescriptionChanged($event)"></textarea>
     <div class="watchlist-actions">
       <cmp-button (click)="openShare()" *ngIf="watchlistService.watchlist.publicList">
         <span>{{'SHARE' | translate}} <i class="fa-solid fa-link"></i></span>
       </cmp-button>
-      <cmp-button (onClick)="toggleVisibility()" [disabled]="true"
+      <cmp-button (onClick)="toggleVisibility()"
                   [type]="watchlistService.watchlist.publicList ? 'success' : 'danger'">
         <span *ngIf="watchlistService.watchlist.publicList">{{'PUBLIC' | translate}} <i
           class="fa-solid fa-lock-open"></i></span>
@@ -13,17 +13,23 @@
       </cmp-button>
     </div>
   </div>
-  <div class="search-results">
-    <div (click)="onMovieClick(movie)" *ngFor="let movie of watchlistService.watchlist.watchlistItems"
-         class="search-result">
-      <img (error)="onErrorImage($event)" [alt]="movie.title" [src]="movie.poster" draggable="false"/>
-      <div class="search-result-info">
-        <h3>{{movie.title}}</h3>
-        <p>{{movie.year}}</p>
-      </div>
+  <cmp-movie-list [movies]="watchlistService.watchlist.watchlistItems"></cmp-movie-list>
+</div>
+<div *ngIf="watchlistId && watchlistService.otherWatchlist">
+  <div class="watchlist-header">
+    <textarea [(ngModel)]="watchlistService.otherWatchlist.description" class="description" disabled></textarea>
+    <div class="watchlist-actions">
+      <cmp-button (click)="openShare()" *ngIf="watchlistService.otherWatchlist.publicList">
+        <span>{{'SHARE' | translate}} <i class="fa-solid fa-link"></i></span>
+      </cmp-button>
+      <cmp-button (onClick)="toggleVisibility()" [disabled]="true"
+                  [type]="watchlistService.otherWatchlist.publicList ? 'success' : 'danger'">
+        <span *ngIf="watchlistService.otherWatchlist.publicList">{{'PUBLIC' | translate}} <i
+          class="fa-solid fa-lock-open"></i></span>
+        <span *ngIf="!watchlistService.otherWatchlist.publicList">{{'PRIVATE' | translate}} <i
+          class="fa-solid fa-lock"></i></span>
+      </cmp-button>
     </div>
   </div>
-  <div *ngIf="!watchlistService.watchlist || watchlistService.watchlist.watchlistItems.length === 0" class="no-results">
-    <p>No movies in your watchlist</p>
-  </div>
+  <cmp-movie-list [movies]="watchlistService.otherWatchlist.watchlistItems" [watchlistButton]="true"></cmp-movie-list>
 </div>

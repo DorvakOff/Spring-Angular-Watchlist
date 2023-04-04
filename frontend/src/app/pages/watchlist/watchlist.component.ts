@@ -1,38 +1,59 @@
-import {Component, OnInit} from '@angular/core';
-import {JSONMovie} from "../../models/OMDB";
-import {Router} from "@angular/router";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
 import {WatchlistService} from "../../services/watchlist.service";
 import {UserService} from "../../services/user.service";
 import {ServletRequesterService} from "../../services/servlet-requester.service";
+import {NavigationService} from "../../services/navigation.service";
+import {debounceTime, distinctUntilChanged, Subject, Subscription} from "rxjs";
 
 @Component({
   selector: 'cmp-watchlist',
   templateUrl: './watchlist.component.html',
   styleUrls: ['./watchlist.component.scss']
 })
-export class WatchlistComponent implements OnInit {
+export class WatchlistComponent implements OnInit, OnDestroy {
 
-  constructor(private router: Router, public watchlistService: WatchlistService, public userService: UserService, private servletRequester: ServletRequesterService) {
+  watchlistId?: string
+  editDescriptionSubject = new Subject<string | undefined>()
+  editDescriptionSubscription?: Subscription
+
+  constructor(private navigationService: NavigationService, public watchlistService: WatchlistService, public userService: UserService, private servletRequester: ServletRequesterService, activatedRoute: ActivatedRoute) {
+    this.watchlistId = activatedRoute.snapshot.params['id']
     let interval = setInterval(() => {
       if (!this.userService.autoLoginLoading) {
         clearInterval(interval)
         if (!this.userService.user) {
-          this.router.navigateByUrl('/login?redirect=/watchlist')
+          this.navigationService.navigate('/login?redirect=/watchlist' + (this.watchlistId ? '/' + this.watchlistId : ''))
           return
+        }
+        if (this.watchlistId) {
+          this.watchlistService.loadWatchlistById(this.watchlistId)
         }
       }
     }, 1)
   }
 
+  public onDescriptionChanged(event: Event): void {
+    const searchQuery = (event.target as HTMLInputElement).value;
+    this.editDescriptionSubject.next(searchQuery?.trim());
+  }
+
   ngOnInit(): void {
+    this.editDescriptionSubscription = this.editDescriptionSubject
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+      )
+      .subscribe((results) => {
+        if (results && this.watchlistService.watchlist) {
+          this.watchlistService.watchlist.description = results
+          this.servletRequester.requestAction('WatchlistServlet', 'edit', {description: results}).subscribe();
+        }
+      });
   }
 
-  onErrorImage(event: any) {
-    event.target.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
-  }
-
-  onMovieClick(movie: JSONMovie) {
-    this.router.navigate(['/movie', movie.imdbID])
+  ngOnDestroy(): void {
+    this.editDescriptionSubscription?.unsubscribe()
   }
 
   toggleVisibility() {

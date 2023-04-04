@@ -20,5 +20,7 @@
   "LOGIN_OR_CREATE": "Login or create an account",
   "EMAIL_OR_USERNAME": "Email or Username",
   "PUBLIC": "Public",
-  "PRIVATE": "Private"
+  "PRIVATE": "Private",
+  "NOTHING_HERE": "Nothing here",
+  "ENTER_DESCRIPTION": "Enter description"
 }

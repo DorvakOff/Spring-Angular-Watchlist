@@ -1,5 +1,6 @@
 package com.dorvak.webapp.metier.models;
 
+import com.dorvak.webapp.moteur.model.User;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -24,11 +25,11 @@ public class Watchlist {
     public Watchlist() {
     }
 
-    public Watchlist(List<JSONMovie> watchlistItems, String ownerID) {
+    public Watchlist(List<JSONMovie> watchlistItems, User owner) {
         this.watchlistItems = watchlistItems;
-        this.ownerID = ownerID;
+        this.ownerID = owner.getUserId();
         this.publicList = false;
-        this.description = "";
+        this.description = owner.getUsername() + "'s watchlist";
     }
 
     public List<JSONMovie> getWatchlistItems() {

@@ -9,13 +9,14 @@ import com.dorvak.webapp.moteur.servicelet.OutputData;
 import com.dorvak.webapp.moteur.servicelet.WebServlet;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class WatchlistServlet extends WebServlet {
 
     private static Watchlist getWatchlist(InputData inputData) {
         Watchlist watchlist = AppAutowire.getInstance().getRepository(WatchlistRepository.class).findByOwnerID(inputData.getUser().getUserId());
         if (watchlist == null) {
-            watchlist = new Watchlist(new ArrayList<>(), inputData.getUser().getUserId());
+            watchlist = new Watchlist(new ArrayList<>(), inputData.getUser());
             AppAutowire.getInstance().getRepository(WatchlistRepository.class).save(watchlist);
         }
         return watchlist;
@@ -73,6 +74,19 @@ public class WatchlistServlet extends WebServlet {
 
         if (inputData.has("description") || inputData.has("publicList")) {
             AppAutowire.getInstance().getRepository(WatchlistRepository.class).save(watchlist);
+        }
+
+        this.sendData(outputData);
+    }
+
+    public void toLoadById(InputData inputData, OutputData outputData) {
+        Optional<Watchlist> watchlist = AppAutowire.getInstance().getRepository(WatchlistRepository.class).findById(inputData.get("id"));
+
+        if (watchlist.isPresent() && watchlist.get().isPublicList()) {
+            setData("watchlist", watchlist.get());
+            this.sendData(outputData);
+        } else {
+            outputData.setError("No watchlist found with this id");
         }
 
         this.sendData(outputData);

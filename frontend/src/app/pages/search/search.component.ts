@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {OMDBMovie, OMDBSearchResult} from "../../models/OMDB";
+import {JSONMovie, OMDBMovie, OMDBSearchResult} from "../../models/OMDB";
 import {OMDBService} from "../../services/omdb.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {WatchlistService} from "../../services/watchlist.service";
-import {UserService} from "../../services/user.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'cmp-search',
@@ -14,8 +12,9 @@ export class SearchComponent implements OnInit {
 
   searchResult?: OMDBSearchResult
   keywords: string = '';
+  movies: JSONMovie[] = []
 
-  constructor(public userService: UserService, public omdb: OMDBService, private activatedRoute: ActivatedRoute, private router: Router, public watchlistService: WatchlistService) {
+  constructor(public omdb: OMDBService, private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -35,15 +34,14 @@ export class SearchComponent implements OnInit {
         return
       }
       this.searchResult = response
+      this.movies = response.Search.map((movie: OMDBMovie) => {
+        return {
+          title: movie.Title,
+          year: movie.Year,
+          imdbID: movie.imdbID,
+          poster: movie.Poster
+        }
+      })
     })
   }
-
-  onErrorImage(event: any) {
-    event.target.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
-  }
-
-  onMovieClick(movie: OMDBMovie) {
-    this.router.navigate(['/movie', movie.imdbID])
-  }
-
 }

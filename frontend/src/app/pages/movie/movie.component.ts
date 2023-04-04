@@ -49,4 +49,13 @@ export class MovieComponent implements OnInit {
     let url = this.getUrl()
     navigator.clipboard.writeText(url)
   }
+
+  addOrRemoveFromWatchlist(movie: OMDBMovie) {
+    this.watchlistService.addOrRemoveFromWatchlist({
+      title: movie.Title,
+      year: movie.Year,
+      imdbID: movie.imdbID,
+      poster: movie.Poster
+    })
+  }
 }
