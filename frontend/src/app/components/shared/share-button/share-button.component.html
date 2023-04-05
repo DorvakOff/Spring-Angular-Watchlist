@@ -1,0 +1,4 @@
+<cmp-button (click)="copyUrl()">
+  <span *ngIf="!clicked">{{'SHARE' | translate}} <i class="fa-solid fa-link"></i></span>
+  <span *ngIf="clicked">{{'COPIED' | translate}} <i class="fa-solid fa-check"></i></span>
+</cmp-button>
