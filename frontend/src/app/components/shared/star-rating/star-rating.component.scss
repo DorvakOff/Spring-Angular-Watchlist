@@ -1,0 +1,23 @@
+.star-rating {
+  margin: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+
+  .fa-star {
+    color: #ffffff;
+    font-size: 1.5rem;
+    transition: all 0.2s ease-in-out;
+
+    &.selected {
+      color: var(--gold);
+    }
+
+    &:hover {
+      color: var(--gold);
+      transform: scale(1.2);
+    }
+  }
+}

@@ -43,6 +43,10 @@ public class InputData extends IOData {
         return Objects.toString(data.get(key), "");
     }
 
+    public int getInt(String key) {
+        return Integer.parseInt(get(key));
+    }
+
     public boolean has(String key) {
         return data.containsKey(key);
     }

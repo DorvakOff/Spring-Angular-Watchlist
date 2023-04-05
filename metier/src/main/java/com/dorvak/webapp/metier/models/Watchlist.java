@@ -71,4 +71,8 @@ public class Watchlist {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public JSONMovie getMovie(String imdbID) {
+        return this.watchlistItems.stream().filter(movie -> movie.getImdbID().equals(imdbID)).findFirst().orElse(null);
+    }
 }

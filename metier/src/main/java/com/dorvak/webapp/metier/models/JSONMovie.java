@@ -18,6 +18,7 @@ public class JSONMovie {
     private String year;
     private String imdbID;
     private String poster;
+    private int rating;
 
     public JSONMovie() {
     }
@@ -27,6 +28,7 @@ public class JSONMovie {
         this.year = year;
         this.imdbID = imdbID;
         this.poster = poster;
+        this.rating = 0;
     }
 
     public String getImdbID() {
@@ -67,5 +69,13 @@ public class JSONMovie {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 }

@@ -1,73 +1,80 @@
 <article *ngIf="movie">
-    <section class="movie-detail">
-        <div class="container">
+  <section class="movie-detail">
+    <div class="container">
 
-            <div class="movie-detail-poster">
-                <img [alt]="movie.Title + 'movie poster'" [src]="movie.Poster" draggable="false">
+      <div class="movie-detail-poster">
+        <img [alt]="movie.Title + 'movie poster'" [src]="movie.Poster" draggable="false">
+      </div>
+
+      <div class="movie-detail-content">
+
+        <h1 class="h1 detail-title">
+          {{ movie.Title }}
+        </h1>
+
+        <div class="meta-wrapper">
+
+          <div class="badge-wrapper">
+            <div class="badge badge-fill">{{movie.Rated}}</div>
+          </div>
+
+          <div class="genre-wrapper">
+            <a *ngFor="let genre of getGenreAsList()" [routerLink]="'genres/' + genre"
+               class="genre">{{genre}}</a>
+          </div>
+
+          <div class="date-time">
+
+            <div class="release-date">
+              <i class="fa-solid fa-calendar-days"></i>
+              <time [dateTime]="movie.Released">{{movie.Released | date}}</time>
             </div>
 
-            <div class="movie-detail-content">
-
-                <h1 class="h1 detail-title">
-                    {{ movie.Title }}
-                </h1>
-
-                <div class="meta-wrapper">
-
-                    <div class="badge-wrapper">
-                        <div class="badge badge-fill">{{movie.Rated}}</div>
-                    </div>
-
-                    <div class="genre-wrapper">
-                        <a *ngFor="let genre of getGenreAsList()" [routerLink]="'genres/' + genre"
-                           class="genre">{{genre}}</a>
-                    </div>
-
-                    <div class="date-time">
-
-                        <div class="release-date">
-                            <i class="fa-solid fa-calendar-days"></i>
-                            <time [dateTime]="movie.Released">{{movie.Released | date}}</time>
-                        </div>
-
-                        <div class="duration">
-                            <i class="fa-regular fa-clock"></i>
-                            <span *ngIf="movie.Type === 'movie'">{{movie.Runtime}}</span>
-                            <span *ngIf="movie.Type === 'series'">{{movie.totalSeasons}}
-                                {{(movie.totalSeasons == 1 ? 'SEASON' : 'SEASONS') | translate}}</span>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <p class="storyline">
-                    {{movie.Plot}}
-                </p>
-
-                <div class="details-actions">
-                    <div class="share-container">
-                        <cmp-button (click)="onClickShare()">
-                            <i class="fa-solid fa-share"></i>&nbsp;<span>{{'SHARE' | translate}}</span>
-                        </cmp-button>
-                        <div class="share-options">
-                            <p class="title">share</p>
-                            <div class="link-container">
-                                <p class="link">{{getUrl()}}</p>
-                                <button (click)="copyToClipboard()" class="copy-btn">copy</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <cmp-button *ngIf="userService.user" (click)="addOrRemoveFromWatchlist(movie)"
-                                [type]="watchlistService.isOnWatchlist(movie.imdbID) ? 'danger' : 'success'">
-                        <i *ngIf="!watchlistService.isOnWatchlist(movie.imdbID)" class="fa-solid fa-heart"></i><i
-                            *ngIf="watchlistService.isOnWatchlist(movie.imdbID)"
-                            class="fas fa-heart-broken"></i>&nbsp;<span>{{(watchlistService.isOnWatchlist(movie.imdbID) ? 'DISLIKE' : 'LIKE') | translate}}</span>
-                    </cmp-button>
-                </div>
+            <div class="duration">
+              <i class="fa-regular fa-clock"></i>
+              <span *ngIf="movie.Type === 'movie'">{{movie.Runtime}}</span>
+              <span *ngIf="movie.Type === 'series'">{{movie.totalSeasons}}
+                {{(movie.totalSeasons == 1 ? 'SEASON' : 'SEASONS') | translate}}</span>
             </div>
 
+          </div>
+
+          <div *ngIf="averageRating && averageRating > 0" class="rating">
+            <i class="fa-solid fa-star"></i>
+            <span class="rating-value">{{averageRating}}</span>
+          </div>
         </div>
-    </section>
+
+        <p class="storyline">
+          {{movie.Plot}}
+        </p>
+
+        <div class="details-actions">
+          <div class="share-container">
+            <cmp-button (click)="onClickShare()">
+              <i class="fa-solid fa-share"></i>&nbsp;<span>{{'SHARE' | translate}}</span>
+            </cmp-button>
+            <div class="share-options">
+              <p class="title">share</p>
+              <div class="link-container">
+                <p class="link">{{getUrl()}}</p>
+                <button (click)="copyToClipboard()" class="copy-btn">copy</button>
+              </div>
+            </div>
+          </div>
+
+          <cmp-button (click)="addOrRemoveFromWatchlist(movie)" *ngIf="userService.user"
+                      [type]="watchlistService.isOnWatchlist(movie.imdbID) ? 'danger' : 'success'">
+            <i *ngIf="!watchlistService.isOnWatchlist(movie.imdbID)" class="fa-solid fa-heart"></i><i
+            *ngIf="watchlistService.isOnWatchlist(movie.imdbID)"
+            class="fas fa-heart-broken"></i>&nbsp;<span>{{(watchlistService.isOnWatchlist(movie.imdbID) ? 'DISLIKE' : 'LIKE') | translate}}</span>
+          </cmp-button>
+
+          <cmp-star-rating (onRate)="handleMovieRated($event)"
+                           *ngIf="rating != undefined && userService.user && watchlistService.isOnWatchlist(movie.imdbID)"
+                           [rating]="rating"></cmp-star-rating>
+        </div>
+      </div>
+    </div>
+  </section>
 </article>

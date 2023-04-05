@@ -113,6 +113,21 @@
             margin-left: 10px;
           }
         }
+
+        .rating {
+          display: inline-block;
+          margin-left: 10px;
+
+          .fa-solid, .fa-regular {
+            margin-right: 5px;
+            color: var(--gold);
+          }
+
+          .rating-value {
+            display: inline-block;
+            color: #ffffff;
+          }
+        }
       }
 
       .storyline {

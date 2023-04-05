@@ -18,6 +18,7 @@ import { WatchlistComponent } from './pages/watchlist/watchlist.component';
 import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { MovieListComponent } from './components/shared/movie-list/movie-list.component';
+import { StarRatingComponent } from './components/shared/star-rating/star-rating.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { MovieListComponent } from './components/shared/movie-list/movie-list.co
     WatchlistComponent,
     LoginComponent,
     HomeComponent,
-    MovieListComponent
+    MovieListComponent,
+    StarRatingComponent
   ],
   imports: [
     BrowserModule,
