@@ -22,5 +22,6 @@
   "PUBLIC": "Public",
   "PRIVATE": "Private",
   "NOTHING_HERE": "Nothing here",
-  "ENTER_DESCRIPTION": "Enter description"
+  "ENTER_DESCRIPTION": "Enter description",
+  "REVIEWS": "Reviews"
 }

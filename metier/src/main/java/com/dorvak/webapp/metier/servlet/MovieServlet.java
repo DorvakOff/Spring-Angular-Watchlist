@@ -23,8 +23,10 @@ public class MovieServlet extends WebServlet {
 
         String imdbID = inputData.get("imdbID");
         float averageRating = AppAutowire.getInstance().getRepository(WatchlistRepository.class).getAverageRating(imdbID);
+        int count = AppAutowire.getInstance().getRepository(WatchlistRepository.class).getNumberOfRatings(imdbID);
 
         setData("averageRating", averageRating);
+        setData("ratingCount", count);
 
         this.sendData(outputData);
     }

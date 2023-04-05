@@ -16,6 +16,7 @@ export class MovieComponent implements OnInit {
   movie: OMDBMovie | undefined
   rating?: number
   averageRating?: number
+  ratingCount?: number
 
   constructor(public userService: UserService, private omdb: OMDBService, private activatedRoute: ActivatedRoute, private router: Router, public watchlistService: WatchlistService, private servletRequester: ServletRequesterService) {
     this.activatedRoute.params.subscribe(params => {
@@ -33,6 +34,7 @@ export class MovieComponent implements OnInit {
               if (this.userService.user) {
                 this.servletRequester.requestAction('MovieServlet', 'getRating', {imdbID: this.movie?.imdbID}).subscribe(response => {
                   this.rating = response.data.rating
+                  this.ratingCount = response.data.ratingCount
                 })
               }
             }

@@ -39,9 +39,9 @@
 
           </div>
 
-          <div *ngIf="averageRating && averageRating > 0" class="rating">
+          <div *ngIf="averageRating && ratingCount" class="rating">
             <i class="fa-solid fa-star"></i>
-            <span class="rating-value">{{averageRating}}</span>
+            <span class="rating-value">{{averageRating}} - {{ratingCount}} {{'REVIEWS' | translate}}</span>
           </div>
         </div>
 

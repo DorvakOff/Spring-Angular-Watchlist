@@ -22,5 +22,6 @@
   "PUBLIC": "Public",
   "PRIVATE": "Privé",
   "NOTHING_HERE": "Rien ici",
-  "ENTER_DESCRIPTION": "Entrez une description"
+  "ENTER_DESCRIPTION": "Entrez une description",
+  "REVIEWS": "Avis"
 }

@@ -10,4 +10,7 @@ public interface WatchlistRepository extends CrudRepository<Watchlist, String> {
 
     @Query("SELECT NVL(AVG(rating), 0) FROM JSONMovie WHERE imdbID = ?1 and rating > 0")
     float getAverageRating(String imdbID);
+
+    @Query("SELECT COUNT(rating) FROM JSONMovie WHERE imdbID = ?1 and rating > 0")
+    int getNumberOfRatings(String imdbID);
 }
