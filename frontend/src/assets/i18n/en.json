@@ -24,5 +24,7 @@
   "NOTHING_HERE": "Nothing here",
   "ENTER_DESCRIPTION": "Enter description",
   "REVIEWS": "Reviews",
-  "COPIED": "Copied"
+  "COPIED": "Copied",
+  "SORT_TITLE": "Sort by title",
+  "SORT_YEAR": "Sort by year"
 }

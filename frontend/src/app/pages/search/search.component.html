@@ -1,3 +1,4 @@
-<cmp-searchbar class="searchbar" (onSearch)="search($event)" [defaultKeywords]="keywords" [placeholder]="'SEARCH_PLACEHOLDER'"
-               [shouldShowResults]="false"></cmp-searchbar>
-<cmp-movie-list [movies]="movies" [watchlistButton]="true"></cmp-movie-list>
+<cmp-searchbar (onSearch)="search($event)" [defaultKeywords]="keywords" [placeholder]="'SEARCH_PLACEHOLDER'"
+               [shouldShowResults]="false"
+               class="searchbar"></cmp-searchbar>
+<cmp-movie-list [movies]="movies" [showSearch]="false" [watchlistButton]="true"></cmp-movie-list>

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {JSONMovie} from "../../../models/OMDB";
 import {UserService} from "../../../services/user.service";
 import {WatchlistService} from "../../../services/watchlist.service";
@@ -9,7 +9,7 @@ import {NavigationService} from "../../../services/navigation.service";
   templateUrl: './movie-list.component.html',
   styleUrls: ['./movie-list.component.scss']
 })
-export class MovieListComponent implements OnInit {
+export class MovieListComponent implements OnInit, OnChanges {
 
   @Input() movies: JSONMovie[] = []
   @Input() watchlistButton: boolean = false
@@ -23,12 +23,18 @@ export class MovieListComponent implements OnInit {
   ]
 
   constructor(public userService: UserService, public watchlistService: WatchlistService, private navigationService: NavigationService) {
+
   }
 
   ngOnInit(): void {
     this.activeSort = this.sortOptions[0]
     this.sortMovies(false)
   }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.sortMovies(false)
+  }
+
 
   onMovieClick(movie: JSONMovie) {
     this.navigationService.navigate(`/movie/${movie.imdbID}`)
@@ -39,6 +45,10 @@ export class MovieListComponent implements OnInit {
   }
 
   sortMovies(rotateSort: boolean = true) {
+    if (!this.showSearch) {
+      this.sortedMovies = this.movies
+      return
+    }
     if (rotateSort) {
       let index = this.sortOptions.indexOf(this.activeSort)
       index = (index + 1) % this.sortOptions.length

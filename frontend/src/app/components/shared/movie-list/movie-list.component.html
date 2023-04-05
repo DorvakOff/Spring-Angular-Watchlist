@@ -1,8 +1,8 @@
-<div class="list-header">
+<div *ngIf="showSearch" class="list-header">
   <cmp-button (onClick)="sortMovies()" class="sort">{{activeSort.label | translate}}</cmp-button>
-  <cmp-searchbar (onSearch)="searchMovies($event)" *ngIf="showSearch" [shouldShowResults]="false"></cmp-searchbar>
+  <cmp-searchbar (onSearch)="searchMovies($event)" [shouldShowResults]="false"></cmp-searchbar>
 </div>
-<div *ngIf="movies && movies.length > 0" class="search-results">
+<div *ngIf="sortedMovies && sortedMovies.length > 0" class="search-results">
   <div (click)="onMovieClick(movie)" *ngFor="let movie of sortedMovies" class="search-result">
     <img (error)="onErrorImage($event)" [alt]="movie.title" [src]="movie.poster" draggable="false"/>
     <div class="search-result-info">
@@ -18,6 +18,6 @@
     </div>
   </div>
 </div>
-<div *ngIf="!movies || movies.length === 0" class="no-results">
+<div *ngIf="!sortedMovies || sortedMovies.length === 0" class="no-results">
   <p>{{'NOTHING_HERE' | translate}}</p>
 </div>
