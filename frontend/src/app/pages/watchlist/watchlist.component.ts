@@ -16,6 +16,7 @@ export class WatchlistComponent implements OnInit, OnDestroy {
   watchlistId?: string
   editDescriptionSubject = new Subject<string | undefined>()
   editDescriptionSubscription?: Subscription
+  id?: string
 
   constructor(private navigationService: NavigationService, public watchlistService: WatchlistService, public userService: UserService, private servletRequester: ServletRequesterService, activatedRoute: ActivatedRoute) {
     this.watchlistId = activatedRoute.snapshot.params['id']
@@ -27,7 +28,10 @@ export class WatchlistComponent implements OnInit, OnDestroy {
           return
         }
         if (this.watchlistId) {
+          this.id = this.watchlistId
           this.watchlistService.loadWatchlistById(this.watchlistId)
+        } else {
+          this.id = this.userService.user?.userId
         }
       }
     }, 1)
@@ -61,9 +65,5 @@ export class WatchlistComponent implements OnInit, OnDestroy {
     let visibility = !this.watchlistService.watchlist.publicList
     this.watchlistService.watchlist.publicList = visibility
     this.servletRequester.requestAction('WatchlistServlet', 'edit', {publicList: visibility}).subscribe();
-  }
-
-  openShare() {
-    window.open(window.location.href + '/' + this.userService.user?.userId, '_blank')
   }
 }

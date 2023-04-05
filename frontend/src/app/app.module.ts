@@ -19,6 +19,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { MovieListComponent } from './components/shared/movie-list/movie-list.component';
 import { StarRatingComponent } from './components/shared/star-rating/star-rating.component';
+import { ShareButtonComponent } from './components/shared/share-button/share-button.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { StarRatingComponent } from './components/shared/star-rating/star-rating
     LoginComponent,
     HomeComponent,
     MovieListComponent,
-    StarRatingComponent
+    StarRatingComponent,
+    ShareButtonComponent
   ],
   imports: [
     BrowserModule,

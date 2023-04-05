@@ -51,16 +51,7 @@
 
         <div class="details-actions">
           <div class="share-container">
-            <cmp-button (click)="onClickShare()">
-              <i class="fa-solid fa-share"></i>&nbsp;<span>{{'SHARE' | translate}}</span>
-            </cmp-button>
-            <div class="share-options">
-              <p class="title">share</p>
-              <div class="link-container">
-                <p class="link">{{getUrl()}}</p>
-                <button (click)="copyToClipboard()" class="copy-btn">copy</button>
-              </div>
-            </div>
+            <cmp-share-button [path]="'/movie/' + movie.imdbID"></cmp-share-button>
           </div>
 
           <cmp-button (click)="addOrRemoveFromWatchlist(movie)" *ngIf="userService.user"
