@@ -1,10 +1,15 @@
+<div class="list-header">
+  <cmp-button (onClick)="sortMovies()" class="sort">{{activeSort.label | translate}}</cmp-button>
+  <cmp-searchbar (onSearch)="searchMovies($event)" *ngIf="showSearch" [shouldShowResults]="false"></cmp-searchbar>
+</div>
 <div *ngIf="movies && movies.length > 0" class="search-results">
-  <div (click)="onMovieClick(movie)" *ngFor="let movie of movies" class="search-result">
+  <div (click)="onMovieClick(movie)" *ngFor="let movie of sortedMovies" class="search-result">
     <img (error)="onErrorImage($event)" [alt]="movie.title" [src]="movie.poster" draggable="false"/>
     <div class="search-result-info">
       <h3>{{movie.title}}</h3>
       <p>{{movie.year}}</p>
-      <cmp-button *ngIf="userService.user && watchlistButton" (click)="watchlistService.addOrRemoveFromWatchlist(movie); $event.stopPropagation();"
+      <cmp-button (click)="watchlistService.addOrRemoveFromWatchlist(movie); $event.stopPropagation();"
+                  *ngIf="userService.user && watchlistButton"
                   [type]="watchlistService.isOnWatchlist(movie.imdbID) ? 'danger' : 'success'">
         <i *ngIf="!watchlistService.isOnWatchlist(movie.imdbID)" class="fa-solid fa-heart"></i><i
         *ngIf="watchlistService.isOnWatchlist(movie.imdbID)"

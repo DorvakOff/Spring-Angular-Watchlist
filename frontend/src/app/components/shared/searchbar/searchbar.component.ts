@@ -52,17 +52,15 @@ export class SearchbarComponent implements OnInit {
       return
     }
     this.timeout = setTimeout(() => {
-      if (this.keywords.trim().length > 0) {
-        this.doSearch()
-      }
+      this.doSearch()
     }, 250)
   }
 
   doSearch() {
+    this.onSearch.emit(this.keywords.trim())
     if (!this.keywords || !this.inputResults) {
       return
     }
-    this.onSearch.emit(this.keywords.trim())
     this.results = this.inputResults.filter((result: SearchResult) => {
       return result.title.trim().toLowerCase().includes(this.keywords.trim().toLowerCase())
     })
