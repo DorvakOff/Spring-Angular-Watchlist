@@ -27,6 +27,7 @@ export class MovieComponent implements OnInit {
           this.movie = response
           this.servletRequester.requestAction('MovieServlet', 'init', {imdbID: this.movie?.imdbID}).subscribe(response => {
             this.averageRating = response.data.averageRating
+            this.ratingCount = response.data.ratingCount
           })
           let interval = setInterval(() => {
             if (!this.userService.autoLoginLoading) {
@@ -34,7 +35,6 @@ export class MovieComponent implements OnInit {
               if (this.userService.user) {
                 this.servletRequester.requestAction('MovieServlet', 'getRating', {imdbID: this.movie?.imdbID}).subscribe(response => {
                   this.rating = response.data.rating
-                  this.ratingCount = response.data.ratingCount
                 })
               }
             }
