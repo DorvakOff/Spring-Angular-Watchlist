@@ -7,14 +7,16 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Watchlist {
 
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<JSONMovie> watchlistItems;
+    private Set<JSONMovie> watchlistItems;
     @Id
     private String ownerID;
 
@@ -26,17 +28,17 @@ public class Watchlist {
     }
 
     public Watchlist(List<JSONMovie> watchlistItems, User owner) {
-        this.watchlistItems = watchlistItems;
+        this.watchlistItems = new HashSet<>(watchlistItems);
         this.ownerID = owner.getUserId();
         this.publicList = false;
         this.description = owner.getUsername() + "'s watchlist";
     }
 
-    public List<JSONMovie> getWatchlistItems() {
+    public Set<JSONMovie> getWatchlistItems() {
         return watchlistItems;
     }
 
-    public void setWatchlistItems(List<JSONMovie> watchlist) {
+    public void setWatchlistItems(Set<JSONMovie> watchlist) {
         this.watchlistItems = watchlist;
     }
 

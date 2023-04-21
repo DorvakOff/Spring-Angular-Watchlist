@@ -1,6 +1,5 @@
 .watchlist-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   margin: 20px;
 
@@ -8,13 +7,14 @@
     font-size: 20px;
     margin-left: 10px;
     font-weight: 500;
-    width: 80%;
+    min-width: 25%;
+    max-width: 80%;
     color: #ffffff;
   }
 
   .watchlist-actions {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    width: 250px;
+    margin-right: 15px;
   }
 }

@@ -20,21 +20,21 @@ export class WatchlistComponent implements OnInit, OnDestroy {
 
   constructor(private navigationService: NavigationService, public watchlistService: WatchlistService, public userService: UserService, private servletRequester: ServletRequesterService, activatedRoute: ActivatedRoute) {
     this.watchlistId = activatedRoute.snapshot.params['id']
-    let interval = setInterval(() => {
-      if (!this.userService.autoLoginLoading) {
-        clearInterval(interval)
-        if (!this.userService.user) {
-          this.navigationService.navigate('/login?redirect=/watchlist' + (this.watchlistId ? '/' + this.watchlistId : ''))
-          return
-        }
-        if (this.watchlistId) {
-          this.id = this.watchlistId
-          this.watchlistService.loadWatchlistById(this.watchlistId)
-        } else {
+    if (this.watchlistId) {
+      this.id = this.watchlistId
+      this.watchlistService.loadWatchlistById(this.watchlistId)
+    } else {
+      let interval = setInterval(() => {
+        if (!this.userService.autoLoginLoading) {
+          clearInterval(interval)
+          if (!this.userService.user) {
+            this.navigationService.navigate('/login?redirect=/watchlist' + (this.watchlistId ? '/' + this.watchlistId : ''))
+            return
+          }
           this.id = this.userService.user?.userId
         }
-      }
-    }, 1)
+      }, 1)
+    }
   }
 
   public onDescriptionChanged(event: Event): void {

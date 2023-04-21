@@ -32,7 +32,7 @@ export class MovieComponent implements OnInit {
           let interval = setInterval(() => {
             if (!this.userService.autoLoginLoading) {
               clearInterval(interval)
-              if (this.userService.user) {
+              if (this.userService.user && watchlistService.isOnWatchlist(params['id'])) {
                 this.servletRequester.requestAction('MovieServlet', 'getRating', {imdbID: this.movie?.imdbID}).subscribe(response => {
                   this.rating = response.data.rating
                 })
@@ -53,27 +53,18 @@ export class MovieComponent implements OnInit {
     return this.movie?.Genre.split(', ') || []
   }
 
-  onClickShare() {
-    let shareOptions = document.querySelector('.share-options')
-    if (!shareOptions) return
-    shareOptions.classList.toggle('active')
-  }
-
-  getUrl() {
-    return window.location.href
-  }
-
-  copyToClipboard() {
-    let url = this.getUrl()
-    navigator.clipboard.writeText(url)
-  }
-
   addOrRemoveFromWatchlist(movie: OMDBMovie) {
     this.watchlistService.addOrRemoveFromWatchlist({
       title: movie.Title,
       year: movie.Year,
       imdbID: movie.imdbID,
       poster: movie.Poster
+    }, () => {
+      if (this.watchlistService.isOnWatchlist(movie.imdbID)) {
+        this.servletRequester.requestAction('MovieServlet', 'getRating', {imdbID: this.movie?.imdbID}).subscribe(response => {
+          this.rating = response.data.rating
+        })
+      }
     })
   }
 

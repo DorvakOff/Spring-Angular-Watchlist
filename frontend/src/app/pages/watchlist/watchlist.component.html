@@ -3,14 +3,14 @@
     <textarea (keyup)="onDescriptionChanged($event)" [(ngModel)]="watchlistService.watchlist.description"
               [placeholder]="'ENTER_DESCRIPTION' | translate" class="description"></textarea>
     <div class="watchlist-actions">
-      <cmp-share-button *ngIf="watchlistService.watchlist.publicList"
-                        [path]="'/watchlist/' + id"></cmp-share-button>
       <cmp-button (onClick)="toggleVisibility()"
                   [type]="watchlistService.watchlist.publicList ? 'success' : 'danger'">
         <span *ngIf="watchlistService.watchlist.publicList">{{'PUBLIC' | translate}} <i
           class="fa-solid fa-lock-open"></i></span>
         <span *ngIf="!watchlistService.watchlist.publicList">{{'PRIVATE' | translate}} <i class="fa-solid fa-lock"></i></span>
       </cmp-button>
+      <cmp-share-button *ngIf="watchlistService.watchlist.publicList"
+                        [path]="'/watchlist/' + id"></cmp-share-button>
     </div>
   </div>
   <cmp-movie-list [movies]="watchlistService.watchlist.watchlistItems"></cmp-movie-list>

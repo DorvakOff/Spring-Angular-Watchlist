@@ -6,6 +6,7 @@ import com.dorvak.webapp.metier.models.JSONMovie;
 import com.dorvak.webapp.metier.models.Watchlist;
 import com.dorvak.webapp.metier.repositories.WatchlistRepository;
 import com.dorvak.webapp.moteur.servicelet.InputData;
+import com.dorvak.webapp.moteur.servicelet.NoAuth;
 import com.dorvak.webapp.moteur.servicelet.OutputData;
 import com.dorvak.webapp.moteur.servicelet.WebServlet;
 
@@ -70,6 +71,7 @@ public class WatchlistServlet extends WebServlet {
         this.sendData(outputData);
     }
 
+    @NoAuth
     public void toLoadById(InputData inputData, OutputData outputData) {
         Optional<Watchlist> watchlist = AppAutowire.getInstance().getRepository(WatchlistRepository.class).findById(inputData.get("id"));
 

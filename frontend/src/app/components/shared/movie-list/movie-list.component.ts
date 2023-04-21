@@ -23,11 +23,9 @@ export class MovieListComponent implements OnInit, OnChanges {
   ]
 
   constructor(public userService: UserService, public watchlistService: WatchlistService, private navigationService: NavigationService) {
-
   }
 
   ngOnInit(): void {
-    this.activeSort = this.sortOptions[0]
     this.sortMovies(false)
   }
 
@@ -45,6 +43,9 @@ export class MovieListComponent implements OnInit, OnChanges {
   }
 
   sortMovies(rotateSort: boolean = true) {
+    if(!this.activeSort) {
+      this.activeSort = this.sortOptions[0]
+    }
     if (!this.showSearch) {
       this.sortedMovies = this.movies
       return

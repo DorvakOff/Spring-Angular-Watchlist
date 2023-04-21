@@ -20,27 +20,30 @@ export class WatchlistService {
     }, error => this.alertHandler.raiseError(error));
   }
 
-  loadWatchlistById(id: string) {
+  loadWatchlistById(id: string, callback?: () => void) {
     this.servletRequesterService.requestAction('WatchlistServlet', 'loadById', {id: id}).subscribe(response => {
       this.otherWatchlist = response.data.watchlist
+      if (callback) callback();
     }, error => this.alertHandler.raiseError(error));
   }
 
-  addToWatchlist(movie: JSONMovie) {
+  addToWatchlist(movie: JSONMovie, callback?: () => void) {
     let data = {
       movie: movie
     }
     this.servletRequesterService.requestAction('WatchlistServlet', 'add', data).subscribe(response => {
       this.watchlist = response.data.watchlist
+      if (callback) callback();
     }, error => this.alertHandler.raiseError(error));
     if (this.watchlist) {
       this.watchlist.watchlistItems.push(movie);
     }
   }
 
-  removeFromWatchlist(imdbID: string) {
+  removeFromWatchlist(imdbID: string, callback?: () => void) {
     this.servletRequesterService.requestAction('WatchlistServlet', 'delete', {imdbID: imdbID}).subscribe(response => {
       this.watchlist = response.data.watchlist
+      if (callback) callback();
     }, error => this.alertHandler.raiseError(error));
     if (this.watchlist) {
       this.watchlist.watchlistItems = this.watchlist.watchlistItems.filter(watchlistMovie => watchlistMovie.imdbID !== imdbID);
@@ -52,16 +55,16 @@ export class WatchlistService {
     return this.watchlist.watchlistItems.some(watchlistMovie => watchlistMovie.imdbID === imdbID);
   }
 
-  addOrRemoveFromWatchlist(movie: JSONMovie) {
+  addOrRemoveFromWatchlist(movie: JSONMovie, callback?: () => void) {
     if (this.isOnWatchlist(movie.imdbID)) {
-      this.removeFromWatchlist(movie.imdbID);
+      this.removeFromWatchlist(movie.imdbID, callback);
     } else {
       this.addToWatchlist({
         title: movie.title,
         year: movie.year,
         imdbID: movie.imdbID,
         poster: movie.poster
-      });
+      }, callback);
     }
   }
 }
